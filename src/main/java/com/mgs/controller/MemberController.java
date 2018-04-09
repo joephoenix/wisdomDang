@@ -11,7 +11,7 @@ import com.mgs.entity.Pmember;
 import com.mgs.service.PmemberService;
 
 @Controller
-public class PmemberController {
+public class MemberController {
 	
 	@Autowired
 	private PmemberService pmemberService;

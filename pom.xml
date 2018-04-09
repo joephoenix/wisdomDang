@@ -6,7 +6,7 @@
 	<artifactId>wisdomDang</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>smartparty Maven Webapp</name>
+	<name>wisdomDang Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<!-- 版本信息 -->
 	<properties>

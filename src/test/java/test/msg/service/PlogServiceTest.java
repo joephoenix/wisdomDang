@@ -21,6 +21,8 @@ public class PlogServiceTest {
 		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring-mybatis.xml");
 		plogService = (PlogService) context.getBean("plogServiceImpl");
 	}
+	
+	//TODO 添加每个人的登录log日志，
 
 	@Test
 	public void testQueryAllLogsInDays() {

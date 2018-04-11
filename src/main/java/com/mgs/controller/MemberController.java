@@ -24,7 +24,7 @@ public class MemberController {
 	@RequestMapping("/pms")
 	@ResponseBody
 	public List<Pmember> viewALL() {
-		return pmemberService.getMembersByCondition("");
+		return pmemberService.queryMembersByCondition("");
 	}
 
 	@RequestMapping("/aixes")

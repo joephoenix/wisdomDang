@@ -6,7 +6,7 @@ import com.mgs.entity.Pmember;
 
 public interface PmemberService {
 
-	public List<Pmember> getMembersByCondition(String condition);
+	public List<Pmember> queryMembersByCondition(String condition);
 
 	public Pmember getMemberInformation(String id);
 }

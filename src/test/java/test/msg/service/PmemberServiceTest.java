@@ -24,7 +24,7 @@ public class PmemberServiceTest {
 
 	@Test
 	public void testGetMembers() {
-		List<Pmember> ms = pmemberService.getMembersByCondition("");
+		List<Pmember> ms = pmemberService.queryMembersByCondition("");
 		if(ms.size() > 0) {
 			for(Pmember pm : ms){
 				String dang = "dang yuan";

@@ -21,15 +21,13 @@ public class PlogServiceTest {
 		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring-mybatis.xml");
 		plogService = (PlogService) context.getBean("plogServiceImpl");
 	}
-	
-	//TODO 添加每个人的登录log日志，
 
 	@Test
 	public void testQueryAllLogsInDays() {
 		List<Plog> logs = plogService.queryAllLogsInDays();
 		if (logs.size() > 0) {
 			for (Plog lg : logs) {
-				System.out.println("at " + lg.getRecordtime() + "is at dongjing " + lg.getLongitude() + " beiwei "
+				System.out.println("at " + lg.getRecordtm() + "is at dongjing " + lg.getLongitude() + " beiwei "
 						+ lg.getLatitude());
 			}
 		} else {

@@ -15,7 +15,7 @@ public class Plog {
 
 	private String latitude;
 
-	private Date recordtime;
+	private Date recordtm;
 
 	public String getId() {
 		return id;
@@ -49,12 +49,12 @@ public class Plog {
 		this.latitude = latitude;
 	}
 
-	public Date getRecordtime() {
-		return recordtime;
+	public Date getRecordtm() {
+		return recordtm;
 	}
 
-	public void setRecordtime(Date recordtime) {
-		this.recordtime = recordtime;
+	public void setRecordtm(Date recordtm) {
+		this.recordtm = recordtm;
 	}
 
 }

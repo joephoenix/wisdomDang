@@ -6,7 +6,7 @@
 		<result column="mid" jdbcType="VARCHAR" property="mid" />
 		<result column="longitude" jdbcType="VARCHAR" property="longitude" />
 		<result column="latitude" jdbcType="VARCHAR" property="latitude" />
-		<result column="recordtm" jdbcType="TIMESTAMP" property="recordtime" />
+		<result column="recordtm" jdbcType="TIMESTAMP" property="recordtm" />
 	</resultMap>
 	
 	<select id="getlogByPrimaryKey" resultType="com.mgs.entity.Plog">

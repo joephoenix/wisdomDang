@@ -8,8 +8,10 @@ public interface PlogService {
 	
 	List<Plog> queryLogsByMember (String mid);
 	
-	List<Plog> queryAllLogsInDays();
+	List<Plog> queryEntireLogsOfDaily();
 	
 	void addLogForMember(Plog plog);
+	
+	void initLogsForMembers();
 
 }

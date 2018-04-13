@@ -23,12 +23,21 @@ public class PlogServiceTest {
 	}
 
 	@Test
+	public void initAttendLogOfMembers() {
+		plogService.initLogsForMembers();
+	}
+
+	@Test
 	public void testQueryAllLogsInDays() {
-		List<Plog> logs = plogService.queryAllLogsInDays();
+		List<Plog> logs = plogService.queryEntireLogsOfDaily();
 		if (logs.size() > 0) {
 			for (Plog lg : logs) {
-				System.out.println("at " + lg.getRecordtm() + "is at dongjing " + lg.getLongitude() + " beiwei "
-						+ lg.getLatitude());
+				if (null == lg) {
+					System.out.println("there are no log data!");
+				} else {
+					System.out.println("at " + lg.getRecordtm() + " is at dongjing " + lg.getLongitude() + " beiwei "
+							+ lg.getLatitude());
+				}
 			}
 		} else {
 			System.out.println("there are no data!");

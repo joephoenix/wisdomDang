@@ -26,7 +26,7 @@ public class PlogServiceImpl implements PlogService {
 		return plogDAO.queryLogsByMember(mid);
 	}
 
-	public List<Plog> queryAllLogsInDays() {
+	public List<Plog> queryEntireLogsOfDaily() {
 		List<Plog> rlogs = new ArrayList<Plog>();
 		List<Pmember> listMem = pmemberDAO.queryEntireMembers();
 		for (Pmember pm : listMem) {
@@ -38,6 +38,26 @@ public class PlogServiceImpl implements PlogService {
 
 	public void addLogForMember(Plog plog) {
 		plogDAO.addLogForMember(plog);
+	}
+
+	public void initLogsForMembers() {
+		List<Pmember> listMem = pmemberDAO.queryEntireMembers();
+		for (Pmember pm : listMem) {
+			Plog nlg = new Plog();
+			nlg.setMid(pm.getId());
+			int wdMin = 300000;
+			int wdMax = 450000;
+			int wdtail = (int) (wdMin + (wdMax - wdMin) * Math.random());
+			double wd = 30 + wdtail * 0.000001;
+			nlg.setLatitude(String.valueOf(wd));
+			int jdtail = (int) (500000 * Math.random());
+			if (jdtail > 200000) {
+				nlg.setLongitude(String.valueOf(120 + jdtail * 0.000001));
+			} else {
+				nlg.setLongitude(String.valueOf(120 - jdtail * 0.000001));
+			}
+			plogDAO.addLogForMember(nlg);
+		}
 	}
 
 }

@@ -14,11 +14,13 @@ public interface PlogDAO {
 	List<Plog> queryLogsBetweenTimes(Date btime, Date etime);
 
 	/**
-	 * find the last action log for a member
+	 * find the last action log for a member in 8 hours
 	 * 
 	 * @param mid
 	 * @return
 	 */
+	Plog getLastLogOfMember8hours(String mid);
+
 	Plog getLastLogOfMember(String mid);
 
 	/**

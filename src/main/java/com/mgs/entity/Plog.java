@@ -56,5 +56,4 @@ public class Plog {
 	public void setRecordtm(Date recordtm) {
 		this.recordtm = recordtm;
 	}
-
 }

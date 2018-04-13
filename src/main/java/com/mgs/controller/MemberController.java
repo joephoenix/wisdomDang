@@ -21,7 +21,7 @@ public class MemberController {
 	@Autowired
 	private PlogService plogService;
 
-	@RequestMapping("/pms")
+	@RequestMapping("/")
 	@ResponseBody
 	public List<Pmember> viewALL() {
 		return pmemberService.queryMembersByCondition("");
@@ -30,7 +30,7 @@ public class MemberController {
 	@RequestMapping("/aixes")
 	@ResponseBody
 	public List<Plog> viewAixes() {
-		return plogService.queryAllLogsInDays();
+		return plogService.queryEntireLogsOfDaily();
 	}
 
 }

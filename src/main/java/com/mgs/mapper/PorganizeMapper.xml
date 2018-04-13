@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mgs.dao.PorganizeDAO">
+	<resultMap id="BaseResultMap" type="com.mgs.entity.Porganize">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="oname" jdbcType="VARCHAR" property="oname" />
+		<result column="oorder" jdbcType="INTEGER" property="oorder" />
+		<result column="fid" jdbcType="VARCHAR" property="fid" />
+		<result column="state" jdbcType="INTEGER" property="state" />
+		<result column="creater" jdbcType="VARCHAR" property="creater" />
+		<result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+		<result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
+	</resultMap>
+
+	<select id="getOrgInfoById" resultType="com.mgs.entity.Porganize">
+		SELECT * FROM POrganizes WHERE id = #{id}
+	</select>
+
+	<select id="queryEntireOrganizes" resultType="com.mgs.entity.Porganize">
+		SELECT * FROM POrganizes WHERE state = 1
+	</select>
+	
+	<select id="querySubOrganizes" resultType="com.mgs.entity.Porganize">
+		SELECT * FROM POrganizes WHERE fid = #{fid}
+	</select>
+	
+	<select id="queryAbandonOrganizes" resultType="com.mgs.entity.Porganize">
+		SELECT * FROM POrganizes WHERE state = 0
+	</select>
+
+	<select id="queryOrganizesWithOrgname" resultType="com.mgs.entity.Porganize">
+		SELECT * FROM POrganizes WHERE oname like '%#{oname}%' AND state = 1
+	</select>
+	
+	<insert id="addNewOrganize" parameterType="com.mgs.entity.Porganize">
+		<selectKey resultType="java.lang.String" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+		INSERT INTO POrganizes (id, oname, oorder, fid, state, creater, ctime, mtime) VALUES (UUID(), #{oname}, #{oorder}, #{fid}, 1, #{creater}, now(), now())
+	</insert>
+
+	<update id="adjustOrganizeChief">
+		UPDATE POrganizes SET fid = #{fid}, mtime = now() WHERE id = #{id}
+	</update>
+
+	<update id="adjustOrganizeOrder">
+		UPDATE POrganizes SET oorder = #{order}, mtime = now() WHERE id = #{id}
+	</update>
+	
+	<update id="modifyOrganizeName">
+		UPDATE POrganizes SET oname = #{name}, mtime = now() WHERE id = #{id}
+	</update>
+	
+	<update id="moveChooseOrganize">
+		UPDATE POrganizes SET state = 0, mtime = now() WHERE id = #{id}
+	</update>
+
+	<update id="reviseChooseOrg">
+		UPDATE POrganizes SET state = 1, mtime = now() WHERE id = #{id}
+	</update>
+	
+</mapper>

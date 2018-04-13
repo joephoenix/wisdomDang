@@ -3,47 +3,56 @@
 <mapper namespace="com.mgs.dao.PmemberDAO">
 	<resultMap id="BaseResultMap" type="com.mgs.entity.Pmember">
 		<id column="id" jdbcType="VARCHAR" property="id" />
-		<result column="umane" jdbcType="VARCHAR" property="umane" />
-		<result column="rmane" jdbcType="VARCHAR" property="rmane" />
+		<result column="uname" jdbcType="VARCHAR" property="uname" />
+		<result column="rname" jdbcType="VARCHAR" property="rname" />
 		<result column="pword" jdbcType="VARCHAR" property="pword" />
 		<result column="isParty" jdbcType="INTEGER" property="isParty" />
+		<result column="state" jdbcType="INTEGER" property="state" />
 		<result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
 		<result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
 	</resultMap>
 
-	<select id="selectByPrimaryKey" resultType="com.mgs.entity.Pmember">
+	<select id="getMemInfoByPrimaryKey" resultType="com.mgs.entity.Pmember">
 		SELECT * FROM PMembers WHERE id = #{id}
 	</select>
 
-	<select id="selectAllMembers" resultType="com.mgs.entity.Pmember">
-		SELECT * FROM PMembers
+	<select id="queryEntireMembers" resultType="com.mgs.entity.Pmember">
+		SELECT * FROM PMembers WHERE state = 1
+	</select>
+	
+	<select id="queryAbandonMembers" resultType="com.mgs.entity.Pmember">
+		SELECT * FROM PMembers WHERE state = 0
 	</select>
 
-	<select id="selectMembersByuname" resultType="com.mgs.entity.Pmember">
-		SELECT * FROM PMembers where uname like '%#{un}%'
+	<select id="queryMembersByUsername" resultType="com.mgs.entity.Pmember">
+		SELECT * FROM PMembers WHERE uname like '%#{un}%' AND state = 1
 	</select>
 
-	<select id="selectMembersByrname" resultType="com.mgs.entity.Pmember">
-		SELECT * FROM PMembers where rname like '%#{rn}%'
+	<select id="queryMembersByRealname" resultType="com.mgs.entity.Pmember">
+		SELECT * FROM PMembers WHERE rname like '%#{rn}%' AND state = 1
 	</select>
-
-	<update id="updateMemberUname">
-		UPDATE PMembers set uname = #{uname} where id = #{id}
-	</update>
-
-	<update id="updateMemberPword">
-		UPDATE PMembers set pword = #{pword}, mtime = now()
-		where id = #{id}
-	</update>
-
+	
 	<insert id="addNewMember" parameterType="com.mgs.entity.Pmember">
-		<selectKey resultType="java.lang.String" order="AFTER"
-			keyProperty="id">
+		<selectKey resultType="java.lang.String" order="AFTER" keyProperty="id">
 			SELECT LAST_INSERT_ID() AS id
 		</selectKey>
-		INSERT INTO PMembers (id, uname, rname, pword, isParty, ctime, mtime)
-		VALUES (UUID(), #{uname}, #{rname}, #{pword}, #{isParty}, now(),
-		now())
+		INSERT INTO PMembers (id, uname, rname, pword, isParty, state, ctime, mtime) VALUES (UUID(), #{uname}, #{rname}, #{pword}, #{isParty}, 1, now(), now())
 	</insert>
 
+	<update id="modifyMemberUsername">
+		UPDATE PMembers SET uname = #{uname}, mtime = now() WHERE id = #{id}
+	</update>
+
+	<update id="modifyMemberPassword">
+		UPDATE PMembers SET pword = #{pword}, mtime = now() WHERE id = #{id}
+	</update>
+	
+	<update id="moveMemberById">
+		UPDATE PMembers SET state = 0, mtime = now() WHERE id = #{id}
+	</update>
+
+	<update id="recoverMemberById">
+		UPDATE PMembers SET state = 1, mtime = now() WHERE id = #{id}
+	</update>
+	
 </mapper>

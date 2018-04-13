@@ -25,8 +25,8 @@ public class MemberDaoTest extends BaseUnitTest {
 	@Test
 	public void addNewMember() {
 		Pmember pm = new Pmember();
-		pm.setUmane("mazhangwei");
-		pm.setRmane("é©¬å¼ å¨");
+		pm.setUname("mazhangwei");
+		pm.setRname("ÂíÕÅÍş");
 		pm.setPword("123456");
 		pm.setIsParty(0);
 		int rls = pmemberDAO.addNewMember(pm);

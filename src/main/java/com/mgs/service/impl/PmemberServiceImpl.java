@@ -16,17 +16,16 @@ public class PmemberServiceImpl implements PmemberService {
 	@Resource
 	private PmemberDAO pmemberDAO;
 
-
 	public List<Pmember> queryMembersByCondition(String condition) {
 		if (condition == "") {
-			return pmemberDAO.selectAllMembers();
+			return pmemberDAO.queryEntireMembers();
 		} else {
-			return pmemberDAO.selectMembersByuname("condition");
+			return pmemberDAO.queryMembersByUsername("");
 		}
 	}
 
 	public Pmember getMemberInformation(String id) {
-		return pmemberDAO.selectByPrimaryKey(id);
+		return pmemberDAO.getMemInfoByPrimaryKey(id);
 	}
 
 }

@@ -14,6 +14,8 @@ public class Pmember {
 
 	private int isParty;
 
+	private int state;
+
 	private Date ctime;
 
 	private Date mtime;
@@ -26,19 +28,19 @@ public class Pmember {
 		this.id = id;
 	}
 
-	public String getUmane() {
+	public String getUname() {
 		return uname;
 	}
 
-	public void setUmane(String uname) {
+	public void setUname(String uname) {
 		this.uname = uname;
 	}
 
-	public String getRmane() {
+	public String getRname() {
 		return rname;
 	}
 
-	public void setRmane(String rname) {
+	public void setRname(String rname) {
 		this.rname = rname;
 	}
 
@@ -56,6 +58,14 @@ public class Pmember {
 
 	public void setIsParty(int isParty) {
 		this.isParty = isParty;
+	}
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
 	}
 
 	public Date getCtime() {

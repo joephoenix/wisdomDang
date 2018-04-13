@@ -22,15 +22,13 @@ public class PlogServiceImpl implements PlogService {
 	@Resource
 	private PmemberDAO pmemberDAO;
 
-	
 	public List<Plog> queryLogsByMember(String mid) {
 		return plogDAO.queryLogsByMember(mid);
 	}
 
-
 	public List<Plog> queryAllLogsInDays() {
 		List<Plog> rlogs = new ArrayList<Plog>();
-		List<Pmember> listMem = pmemberDAO.selectAllMembers();
+		List<Pmember> listMem = pmemberDAO.queryEntireMembers();
 		for (Pmember pm : listMem) {
 			Plog log = plogDAO.getLastLogOfMember(pm.getId());
 			rlogs.add(log);
@@ -38,7 +36,6 @@ public class PlogServiceImpl implements PlogService {
 		return rlogs;
 	}
 
-	
 	public void addLogForMember(Plog plog) {
 		plogDAO.addLogForMember(plog);
 	}

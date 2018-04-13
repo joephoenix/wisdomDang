@@ -31,7 +31,7 @@ public class PmemberServiceTest {
 				if(pm.getIsParty() == 0) {
 					dang = "qun zhong";
 				}
-				System.out.println(pm.getRmane() + " is " + dang);
+				System.out.println(pm.getRname() + " is " + dang);
 			}
 		}else {
 			System.out.println("there are no data!");

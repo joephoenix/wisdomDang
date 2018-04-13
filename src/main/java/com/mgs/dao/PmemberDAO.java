@@ -12,14 +12,16 @@ public interface PmemberDAO {
 	 * @param id
 	 * @return
 	 */
-	Pmember selectByPrimaryKey(String id);
+	Pmember getMemInfoByPrimaryKey(String id);
 
 	/**
 	 * get a list of all members
 	 * 
 	 * @return
 	 */
-	List<Pmember> selectAllMembers();
+	List<Pmember> queryEntireMembers();
+
+	List<Pmember> queryAbandonMembers();
 
 	/**
 	 * get a list of members by the condation of uname, it's support Fuzzy Lookup
@@ -27,7 +29,7 @@ public interface PmemberDAO {
 	 * @param un
 	 * @return
 	 */
-	List<Pmember> selectMembersByuname(String un);
+	List<Pmember> queryMembersByUsername(String un);
 
 	/**
 	 * get a list of members by the condation of rname, it's support Fuzzy Lookup
@@ -35,7 +37,7 @@ public interface PmemberDAO {
 	 * @param rn
 	 * @return
 	 */
-	List<Pmember> selectMembersByrname(String rn);
+	List<Pmember> queryMembersByRealname(String rn);
 
 	/**
 	 * add a new member or registered
@@ -52,7 +54,7 @@ public interface PmemberDAO {
 	 * @param uname
 	 * @return
 	 */
-	int updateMemberUname(String id, String uname);
+	int modifyMemberUsername(String id, String uname);
 
 	/**
 	 * modify the password of a member
@@ -61,6 +63,10 @@ public interface PmemberDAO {
 	 * @param pword
 	 * @return
 	 */
-	int updateMemberPword(String id, String pword);
+	int modifyMemberPassword(String id, String pword);
+
+	int moveMemberById(String id);
+
+	int recoverMemberById(String id);
 
 }

@@ -33,10 +33,11 @@
 	</select>
 	
 	<insert id="addNewOrganize" parameterType="com.mgs.entity.Porganize">
-		<selectKey resultType="java.lang.String" order="AFTER" keyProperty="id">
-			SELECT LAST_INSERT_ID() AS id
+		<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+			select UUID()
 		</selectKey>
-		INSERT INTO POrganizes (id, oname, oorder, fid, state, creater, ctime, mtime) VALUES (UUID(), #{oname}, #{oorder}, #{fid}, 1, #{creater}, now(), now())
+		INSERT INTO POrganizes (id, oname, oorder, fid, state, creater, ctime, mtime)
+		  VALUES (#{id}, #{oname}, #{oorder}, #{fid}, 1, #{creater}, now(), now())
 	</insert>
 
 	<update id="adjustOrganizeChief">

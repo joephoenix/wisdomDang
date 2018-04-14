@@ -39,13 +39,19 @@ public class PlogServiceImpl implements PlogService {
 	}
 
 	@Override
-	public void addLogForMember(Plog plog) {
-		plogDAO.addLogForMember(plog);
+	public String addLogForMember(Plog plog) {
+		int rlt = plogDAO.addLogForMember(plog);
+		if (rlt > 0) {
+			return plog.getId();
+		} else {
+			return "insert log failed!";
+		}
 	}
 
 	@Override
-	public void initLogsForMembers() {
+	public Integer initLogsForMembers() {
 		List<Pmember> listMem = pmemberDAO.queryEntireMembers();
+		Integer rlts = 0;
 		for (Pmember pm : listMem) {
 			Plog nlg = new Plog();
 			nlg.setMid(pm.getId());
@@ -60,8 +66,9 @@ public class PlogServiceImpl implements PlogService {
 			} else {
 				nlg.setLongitude(String.valueOf(120 - jdtail * 0.000001));
 			}
-			plogDAO.addLogForMember(nlg);
+			rlts += plogDAO.addLogForMember(nlg);
 		}
+		return rlts;
 	}
 
 }

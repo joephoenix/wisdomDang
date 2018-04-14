@@ -6,7 +6,7 @@ import com.mgs.entity.Porganize;
 
 public interface PorganizeService {
 
-	void addNewOrganizeAndInit(Porganize org);
+	String addNewOrganizeAndInit(Porganize org);
 
 	List<Porganize> viewEntireOrganizes();
 

@@ -17,8 +17,13 @@ public class PorganizeServiceImpl implements PorganizeService {
 	private PorganizeDAO porganizeDAO;
 
 	@Override
-	public void addNewOrganizeAndInit(Porganize org) {
-		porganizeDAO.addNewOrganize(org);
+	public String addNewOrganizeAndInit(Porganize org) {
+		int rlt = porganizeDAO.addNewOrganize(org);
+		if (rlt > 0) {
+			return org.getId();
+		} else {
+			return "insert organize failed!";
+		}
 	}
 
 	@Override

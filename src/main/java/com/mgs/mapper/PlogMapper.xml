@@ -25,14 +25,15 @@
 		SELECT * FROM Plogs WHERE mid = #{mid} LIMIT 1
 	</select>
 	
-	<select id="getLastLogOfMember8hours" resultType="com.mgs.entity.Plog">UNIX_TIMESTAMP
+	<select id="getLastLogOfMember8hours" resultType="com.mgs.entity.Plog">
 		SELECT * FROM Plogs WHERE UNIX_TIMESTAMP(recordtm) > UNIX_TIMESTAMP(DATE_SUB(now(), interval 8 hour)) AND mid = #{mid} LIMIT 1
 	</select>
 	
 	<insert id="addLogForMember" parameterType="com.mgs.entity.Plog">
-		<selectKey resultType="java.lang.String" order="AFTER" keyProperty="id">
-			SELECT LAST_INSERT_ID() AS id
+		<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+			select UUID()
 		</selectKey>
-		INSERT INTO Plogs (id, mid, longitude, latitude, recordtm) VALUES (UUID(), #{mid}, #{longitude}, #{latitude}, now())
+		INSERT INTO Plogs (id, mid, longitude, latitude, recordtm)
+		 VALUES (#{id}, #{mid}, #{longitude}, #{latitude}, now())
 	</insert>	
 </mapper>

@@ -16,16 +16,16 @@ public interface PorganizeDAO {
 	
 	List<Porganize> queryOrganizesWithOrgname(String oname);
 
-	void addNewOrganize(Porganize org);
+	int addNewOrganize(Porganize org);
 
-	void adjustOrganizeChief(String fid, String id);
+	int adjustOrganizeChief(String fid, String id);
 
-	void adjustOrganizeOrder(Integer order, String id);
+	int adjustOrganizeOrder(Integer order, String id);
 
-	void modifyOrganizeName(String name, String id);
+	int modifyOrganizeName(String name, String id);
 
-	void moveChooseOrganize(String id);
+	int moveChooseOrganize(String id);
 
-	void reviseChooseOrg(String id);
+	int reviseChooseOrg(String id);
 
 }

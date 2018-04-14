@@ -10,8 +10,8 @@ public interface PlogService {
 	
 	List<Plog> queryEntireLogsOfDaily();
 	
-	void addLogForMember(Plog plog);
+	String addLogForMember(Plog plog);
 	
-	void initLogsForMembers();
+	Integer initLogsForMembers();
 
 }

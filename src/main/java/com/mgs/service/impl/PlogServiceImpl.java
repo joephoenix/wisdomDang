@@ -22,10 +22,12 @@ public class PlogServiceImpl implements PlogService {
 	@Resource
 	private PmemberDAO pmemberDAO;
 
+	@Override
 	public List<Plog> queryLogsByMember(String mid) {
 		return plogDAO.queryLogsByMember(mid);
 	}
 
+	@Override
 	public List<Plog> queryEntireLogsOfDaily() {
 		List<Plog> rlogs = new ArrayList<Plog>();
 		List<Pmember> listMem = pmemberDAO.queryEntireMembers();
@@ -36,10 +38,12 @@ public class PlogServiceImpl implements PlogService {
 		return rlogs;
 	}
 
+	@Override
 	public void addLogForMember(Plog plog) {
 		plogDAO.addLogForMember(plog);
 	}
 
+	@Override
 	public void initLogsForMembers() {
 		List<Pmember> listMem = pmemberDAO.queryEntireMembers();
 		for (Pmember pm : listMem) {

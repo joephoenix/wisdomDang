@@ -16,6 +16,7 @@ public class PmemberServiceImpl implements PmemberService {
 	@Resource
 	private PmemberDAO pmemberDAO;
 
+	@Override
 	public List<Pmember> queryMembersByCondition(String condition) {
 		if (condition == "") {
 			return pmemberDAO.queryEntireMembers();
@@ -24,6 +25,7 @@ public class PmemberServiceImpl implements PmemberService {
 		}
 	}
 
+	@Override
 	public Pmember getMemberInformation(String id) {
 		return pmemberDAO.getMemInfoByPrimaryKey(id);
 	}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mgs.dao.FileReadLogDAO">
+	<resultMap id="BaseResultMap" type="com.mgs.entity.FileReadLog">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="fid" jdbcType="VARCHAR" property="fid" />
+		<result column="mid" jdbcType="VARCHAR" property="mid" />
+		<result column="rst" jdbcType="INTEGER" property="rst" />
+		<result column="stime" jdbcType="TIMESTAMP" property="stime" />
+		<result column="rtime" jdbcType="TIMESTAMP" property="rtime" />
+		<result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+	</resultMap>
+
+	<select id="getLogDetailByPrimarykey" resultType="com.mgs.entity.FileReadLog">
+		SELECT * FROM FileReadLogs WHERE id = #{id}
+	</select>
+
+	<select id="queryReadlogByfileId" resultType="com.mgs.entity.FileReadLog">
+		SELECT * FROM FileReadLogs WHERE rst = #{rst} and fid = #{fid}
+	</select>	
+
+	<select id="queryReadlogByMemberid" resultType="com.mgs.entity.FileReadLog">
+		SELECT * FROM FileReadLogs WHERE rst = #{rst} and mid = #{mid}
+	</select>
+
+	<insert id="sendSaveFileToMember" parameterType="com.mgs.entity.FileReadLog">
+		<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+			select UUID()
+		</selectKey>
+		INSERT INTO FileReadLogs (id, fid, mid, rst, stime, rtime, ctime) 
+		   VALUES (#{id}, #{fid}, #{mid}, 1, now(), now(), now())
+	</insert>
+
+	<update id="readOrOpenSaveFile">
+		UPDATE FileReadLogs SET rst = 2, rtime = now() WHERE id = #{id}
+	</update>
+
+	<update id="closeSaveFile">
+		UPDATE FileReadLogs SET rst = 3, ctime = now() WHERE id = #{id}
+	</update>
+	
+	<update id="trashSaveFile">
+		UPDATE FileReadLogs SET rst = 0 WHERE id = #{id}
+	</update>
+
+</mapper>

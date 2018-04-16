@@ -18,10 +18,10 @@ public class PmemberServiceImpl implements PmemberService {
 
 	@Override
 	public List<Pmember> queryMembersByCondition(String condition) {
-		if (condition == "") {
+		if ("" == condition || null == condition) {
 			return pmemberDAO.queryEntireMembers();
 		} else {
-			return pmemberDAO.queryMembersByUsername("");
+			return pmemberDAO.queryMembersByUsername(condition);
 		}
 	}
 

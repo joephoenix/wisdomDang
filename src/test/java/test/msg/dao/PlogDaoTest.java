@@ -1,11 +1,7 @@
 package test.msg.dao;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import com.mgs.dao.PlogDAO;
 import com.mgs.entity.Plog;
 
@@ -14,13 +10,7 @@ import test.msg.BaseUnitTest;
 public class PlogDaoTest extends BaseUnitTest {
 
 	@Autowired
-	private static PlogDAO plogDAO;
-
-	@BeforeClass
-	public static void init() {
-		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring-mybatis.xml");
-		plogDAO = (PlogDAO) context.getBean("plogDAO");
-	}
+	private PlogDAO plogDAO;
 
 	@Test
 	public void addPlog() {

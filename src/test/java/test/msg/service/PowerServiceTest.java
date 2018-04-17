@@ -1,25 +1,17 @@
 package test.msg.service;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import com.mgs.entity.Power;
 import com.mgs.service.PowerService;
 
-public class PowerServiceTest {
+import test.msg.BaseUnitTest;
+
+public class PowerServiceTest extends BaseUnitTest {
 	
 	@Autowired
-	private static PowerService powerService;
-	
-	@BeforeClass
-	public static void init() {
-		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring-mybatis.xml");
-		powerService = (PowerService)context.getBean("powerServiceImpl");
-	}
-	
+	private PowerService powerService;
+		
 	@Test
 	public void testGenerateMethod() {
 		Power power = new Power();

@@ -2,12 +2,8 @@ package test.msg.service;
 
 import java.util.List;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import com.mgs.entity.Pmember;
 import com.mgs.service.PmemberService;
 

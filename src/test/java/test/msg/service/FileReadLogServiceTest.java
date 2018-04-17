@@ -15,7 +15,7 @@ import com.mgs.service.PmemberService;
 import com.mgs.service.SfileService;
 import test.msg.BaseUnitTest;
 
-public class FileReadLogServiceImpl extends BaseUnitTest {
+public class FileReadLogServiceTest extends BaseUnitTest {
 
 	@Autowired
 	private FileReadLogService fileReadLogService;

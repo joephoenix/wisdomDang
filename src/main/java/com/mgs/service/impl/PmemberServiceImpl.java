@@ -30,4 +30,14 @@ public class PmemberServiceImpl implements PmemberService {
 		return pmemberDAO.getMemInfoByPrimaryKey(id);
 	}
 
+	@Override
+	public String addNewMember(Pmember npm) {
+		int rlt = pmemberDAO.addNewMember(npm);
+		if (rlt > 0) {
+			return npm.getId();
+		} else {
+			return "generate new member failed";
+		}
+	}
+
 }

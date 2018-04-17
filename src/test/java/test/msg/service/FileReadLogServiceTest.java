@@ -24,7 +24,7 @@ public class FileReadLogServiceTest extends BaseUnitTest {
 	private SfileService sfileService;
 
 	@Autowired
-	private PmemberService pmemberServiceService;
+	private PmemberService pmemberService;
 
 	@Test
 	@Ignore
@@ -38,7 +38,7 @@ public class FileReadLogServiceTest extends BaseUnitTest {
 		} else {
 			for (Sfile sf : filelist) {
 				String fid = sf.getId();
-				List<Pmember> memberlist = pmemberServiceService.queryMembersByCondition("");
+				List<Pmember> memberlist = pmemberService.queryMembersByCondition("");
 				if (null == filelist) {
 					System.out.println("There are no members!");
 				} else {
@@ -64,7 +64,7 @@ public class FileReadLogServiceTest extends BaseUnitTest {
 						System.out.println("there is no object");
 					} else {
 						String fname = sfileService.getSaveFileInformation(dt.getFid()).getFname();
-						String mname = pmemberServiceService.getMemberInformation(dt.getMid()).getUname();
+						String mname = pmemberService.getMemberInformation(dt.getMid()).getUname();
 						System.out.println("the log detail is file that named " + fname + " send to member " + mname);
 					}
 				}
@@ -80,7 +80,7 @@ public class FileReadLogServiceTest extends BaseUnitTest {
 		} else {
 			for (FileReadLog frl : listfs) {
 				String fname = sfileService.getSaveFileInformation(frl.getFid()).getFname();
-				String mname = pmemberServiceService.getMemberInformation(frl.getMid()).getUname();
+				String mname = pmemberService.getMemberInformation(frl.getMid()).getUname();
 				Integer s = frl.getRst();
 				System.out.println(
 						"the log detail is file that named " + fname + " send to member " + mname + " state is " + s);

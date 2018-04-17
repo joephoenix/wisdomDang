@@ -17,6 +17,11 @@ public class PorganizeServiceImpl implements PorganizeService {
 	private PorganizeDAO porganizeDAO;
 
 	@Override
+	public Porganize getOrganizeInfo(String id) {
+		return porganizeDAO.getOrgInfoById(id);
+	}
+
+	@Override
 	public String addNewOrganizeAndInit(Porganize org) {
 		int rlt = porganizeDAO.addNewOrganize(org);
 		if (rlt > 0) {

@@ -16,7 +16,7 @@ import test.msg.BaseUnitTest;
 public class PmemberServiceTest extends BaseUnitTest {
 
 	@Autowired
-	private static PmemberService pmemberService;
+	private PmemberService pmemberService;
 
 	@Test
 	public void testAddNewMember() {

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mgs.dao.RelationMRDAO">
+	<resultMap id="BaseResultMap" type="com.mgs.entity.RelationMR">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="mid" jdbcType="VARCHAR" property="mid" />
+		<result column="rid" jdbcType="VARCHAR" property="rid" />
+		<result column="state" jdbcType="INTEGER" property="state" />
+		<result column="creater" jdbcType="VARCHAR" property="creater" />
+		<result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+		<result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
+	</resultMap>
+
+	<select id="getRelationWithMember2Role" resultType="com.mgs.entity.RelationMR">
+		SELECT * FROM RelationMR WHERE id = #{id}
+	</select>
+	
+	<insert id="giveChooseRole2Member" parameterType="com.mgs.entity.RelationMR">
+		<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+			select UUID()
+		</selectKey>
+		INSERT INTO RelationMR (id, mid, rid, state, creater, ctime, mtime) 
+		   VALUES (#{id}, #{mid}, #{rid}, 1, #{creater}, now(), now())
+	</insert>
+
+	<select id="queryRoles4Member" resultType="com.mgs.entity.RelationMR">
+		SELECT * FROM RelationMR WHERE mid = #{mid} AND state = 1
+	</select>	
+
+	<select id="queryMembersWithRole" resultType="com.mgs.entity.RelationMR">
+		SELECT * FROM RelationMR WHERE rid = #{rid} AND state = 1
+	</select>
+	
+	<select id="getRelationByMemberRole" resultType="com.mgs.entity.RelationMR">
+		SELECT * FROM RelationMR WHERE mid = #{mid} and rid = #{rid}
+	</select>
+
+	<update id="removeRoleFromMember">
+		UPDATE RelationMR SET state = 0, mtime = now() WHERE id = #{id}
+	</update>
+
+	<update id="reviseRole2Member">
+		UPDATE RelationMR SET state = 1, mtime = now() WHERE id = #{id}
+	</update>
+
+</mapper>

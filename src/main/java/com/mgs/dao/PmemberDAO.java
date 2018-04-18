@@ -2,6 +2,8 @@ package com.mgs.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.mgs.entity.Pmember;
 
 public interface PmemberDAO {
@@ -12,7 +14,7 @@ public interface PmemberDAO {
 	 * @param id
 	 * @return
 	 */
-	Pmember getMemInfoByPrimaryKey(String id);
+	Pmember getMemInfoByPrimaryKey(@Param("id") String id);
 
 	/**
 	 * get a list of all members
@@ -37,7 +39,7 @@ public interface PmemberDAO {
 	 * @param rn
 	 * @return
 	 */
-	List<Pmember> queryMembersByRealname(String rn);
+	List<Pmember> queryMembersByRealname(@Param("rn") String rn);
 
 	/**
 	 * add a new member or registered
@@ -54,7 +56,7 @@ public interface PmemberDAO {
 	 * @param uname
 	 * @return
 	 */
-	int modifyMemberUsername(String id, String uname);
+	int modifyMemberUsername(@Param("id") String id, @Param("uname") String uname);
 
 	/**
 	 * modify the password of a member
@@ -63,10 +65,10 @@ public interface PmemberDAO {
 	 * @param pword
 	 * @return
 	 */
-	int modifyMemberPassword(String id, String pword);
+	int modifyMemberPassword(@Param("id") String id, @Param("pword") String pword);
 
-	int moveMemberById(String id);
+	int moveMemberById(@Param("id") String id);
 
-	int recoverMemberById(String id);
+	int recoverMemberById(@Param("id") String id);
 
 }

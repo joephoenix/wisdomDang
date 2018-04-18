@@ -25,11 +25,11 @@
 	</select>
 
 	<select id="queryMembersByUsername" resultType="com.mgs.entity.Pmember">
-		SELECT * FROM PMembers WHERE uname like '%#{un}%' AND state = 1
+		SELECT * FROM PMembers WHERE uname like #{un} AND state = 1
 	</select>
 
 	<select id="queryMembersByRealname" resultType="com.mgs.entity.Pmember">
-		SELECT * FROM PMembers WHERE rname like '%#{rn}%' AND state = 1
+		SELECT * FROM PMembers WHERE rname like #{rn} AND state = 1
 	</select>
 	
 	<insert id="addNewMember" parameterType="com.mgs.entity.Pmember">

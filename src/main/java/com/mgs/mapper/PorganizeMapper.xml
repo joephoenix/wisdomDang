@@ -29,7 +29,7 @@
 	</select>
 
 	<select id="queryOrganizesWithOrgname" resultType="com.mgs.entity.Porganize">
-		SELECT * FROM POrganizes WHERE oname like '%#{oname}%' AND state = 1
+		SELECT * FROM POrganizes WHERE oname like #{oname} AND state = 1
 	</select>
 	
 	<insert id="addNewOrganize" parameterType="com.mgs.entity.Porganize">

@@ -32,6 +32,16 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
+	public Role getRoleByNamesearch(String name) {
+		List<Role> roles = roleDAO.queryRoleWithName("%" + name + "%");
+		if (null == roles || 0 == roles.size()) {
+			return null;
+		} else {
+			return roles.get(0);
+		}
+	}
+
+	@Override
 	public List<Role> queryEntireRoles() {
 		return roleDAO.queryEntireRoles();
 	}
@@ -40,5 +50,4 @@ public class RoleServiceImpl implements RoleService {
 	public Integer removeChooseRole(String id) {
 		return Integer.valueOf(roleDAO.removeRoleById(id));
 	}
-
 }

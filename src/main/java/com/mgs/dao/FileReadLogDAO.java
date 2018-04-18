@@ -2,22 +2,24 @@ package com.mgs.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.mgs.entity.FileReadLog;
 
 public interface FileReadLogDAO {
 
-	FileReadLog getLogDetailByPrimarykey(String id);
+	FileReadLog getLogDetailByPrimarykey(@Param("id") String id);
 
-	List<FileReadLog> queryReadlogByfileId(Integer rst, String fid);
+	List<FileReadLog> queryReadlogByfileId(@Param("rst") Integer rst, @Param("id") String fid);
 
-	List<FileReadLog> queryReadlogByMemberid(Integer rst, String mid);
+	List<FileReadLog> queryReadlogByMemberid(@Param("rst") Integer rst, @Param("id") String mid);
 
 	int sendSaveFileToMember(FileReadLog rlog);
 
-	int readOrOpenSaveFile(String id);
+	int readOrOpenSaveFile(@Param("id") String id);
 
-	int closeSaveFile(String id);
-	
-	int trashSaveFile(String id);
+	int closeSaveFile(@Param("id") String id);
+
+	int trashSaveFile(@Param("id") String id);
 
 }

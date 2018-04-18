@@ -24,11 +24,11 @@
 	</select>
 
 	<select id="queryRoleWithName" resultType="com.mgs.entity.Role">
-		SELECT * FROM Roles WHERE rname like '%#{name}%' AND state = 1
+		SELECT * FROM Roles WHERE rname like #{name} AND state = 1
 	</select>
 	
 	<select id="queryRoleWithDesc" resultType="com.mgs.entity.Role">
-		SELECT * FROM Roles WHERE rdesc like '%#{desc}%' AND state = 1
+		SELECT * FROM Roles WHERE rdesc like #{desc} AND state = 1
 	</select>
 
 	<insert id="addNewRole" parameterType="com.mgs.entity.Role">

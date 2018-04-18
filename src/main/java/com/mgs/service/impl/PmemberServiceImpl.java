@@ -21,7 +21,7 @@ public class PmemberServiceImpl implements PmemberService {
 		if ("" == condition || null == condition) {
 			return pmemberDAO.queryEntireMembers();
 		} else {
-			return pmemberDAO.queryMembersByUsername(condition);
+			return pmemberDAO.queryMembersByUsername("%" + condition + "%");
 		}
 	}
 

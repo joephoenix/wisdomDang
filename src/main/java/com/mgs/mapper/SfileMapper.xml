@@ -25,7 +25,7 @@
 	</select>
 
 	<select id="queryFilesWithNane" resultType="com.mgs.entity.Sfile">
-		SELECT * FROM SFiles WHERE fname like '%#{name}%' AND state = 1
+		SELECT * FROM SFiles WHERE fname like #{name} AND state = 1
 	</select>
 	
 	<select id="queryFileByExtname" resultType="com.mgs.entity.Sfile">

@@ -3,6 +3,7 @@ package com.mgs.service;
 import java.util.List;
 
 import com.mgs.entity.Sfile;
+import com.mgs.fastdfs.FastDFSFile;
 
 public interface SfileService {
 
@@ -17,5 +18,7 @@ public interface SfileService {
 	List<Sfile> filterSavefileByExtname(String ext);
 
 	int removeChooseSavefile(String id);
+
+	String uploadChooseFileToFastdfs(FastDFSFile ff) throws Exception;
 
 }

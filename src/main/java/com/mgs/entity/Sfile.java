@@ -12,6 +12,8 @@ public class Sfile {
 	
 	private String fpath;
 	
+	private String flength;
+	
 	private Integer state;
 	
 	private String creater;
@@ -50,6 +52,14 @@ public class Sfile {
 
 	public void setFpath(String fpath) {
 		this.fpath = fpath;
+	}
+
+	public String getFlength() {
+		return flength;
+	}
+
+	public void setFlength(String flength) {
+		this.flength = flength;
 	}
 
 	public Integer getState() {

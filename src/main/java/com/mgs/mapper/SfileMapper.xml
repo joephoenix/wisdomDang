@@ -6,6 +6,7 @@
 		<result column="fname" jdbcType="VARCHAR" property="fname" />
 		<result column="fext" jdbcType="VARCHAR" property="fext" />
 		<result column="fpath" jdbcType="VARCHAR" property="fpath" />
+		<result column="flength" jdbcType="VARCHAR" property="flength" />
 		<result column="state" jdbcType="INTEGER" property="state" />
 		<result column="creater" jdbcType="VARCHAR" property="creater" />
 		<result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
@@ -36,8 +37,8 @@
 		<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
 			select UUID()
 		</selectKey>
-		INSERT INTO SFiles (id, fname, fext, fpath, state, creater, ctime, mtime) 
-		   VALUES (#{id}, #{fname}, #{fext}, #{fpath}, 1, #{creater}, now(), now())
+		INSERT INTO SFiles (id, fname, fext, fpath, flength, state, creater, ctime, mtime) 
+		   VALUES (#{id}, #{fname}, #{fext}, #{fpath}, #{flength}, 1, #{creater}, now(), now())
 	</insert>
 
 	<update id="removeSavefileRecord">

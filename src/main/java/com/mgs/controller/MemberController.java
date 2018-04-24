@@ -21,6 +21,23 @@ public class MemberController {
 	@Autowired
 	private PlogService plogService;
 
+	@RequestMapping("/login,method=RequestMethod.POST")
+	@ResponseBody
+	public String loginAction(String username, String password) {
+		List<Pmember> lstMember = pmemberService.queryMembersByCondition(username);
+		if (null == lstMember || 0 < lstMember.size()) {
+			return "MemberNotExist";
+		} else {
+			Pmember mem = lstMember.get(0);
+			String cpwd = mem.getPword();
+			if (!cpwd.equals(password)) {
+				return "MemberNotExist";
+			} else {
+				return "successful";
+			}
+		}
+	}
+
 	@RequestMapping("/")
 	@ResponseBody
 	public List<Pmember> viewALL() {

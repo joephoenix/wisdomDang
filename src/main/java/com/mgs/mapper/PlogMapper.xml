@@ -14,19 +14,21 @@
 	</select>
 	
 	<select id="queryLogsByMember" resultType="com.mgs.entity.Plog">
-		SELECT * FROM Plogs WHERE mid = #{mid}
+		SELECT * FROM Plogs WHERE mid = #{mid} ORDER by recordtm DESC
 	</select>
 	
 	<select id="queryLogsBetweenTimes" resultType="com.mgs.entity.Plog">
-		SELECT * FROM Plogs WHERE UNIX_TIMESTAMP(recordtm) BETWEEN UNIX_TIMESTAMP('#{btime}') AND UNIX_TIMESTAMP('#{etime}')
+		SELECT * FROM Plogs WHERE UNIX_TIMESTAMP(recordtm) 
+		BETWEEN UNIX_TIMESTAMP('#{btime}') AND UNIX_TIMESTAMP('#{etime}') ORDER by recordtm DESC
 	</select>
 	
 	<select id="getLastLogOfMember" resultType="com.mgs.entity.Plog">
-		SELECT * FROM Plogs WHERE mid = #{mid} LIMIT 1
+		SELECT * FROM Plogs WHERE mid = #{mid} LIMIT 1 ORDER by recordtm DESC
 	</select>
 	
 	<select id="getLastLogOfMember8hours" resultType="com.mgs.entity.Plog">
-		SELECT * FROM Plogs WHERE UNIX_TIMESTAMP(recordtm) > UNIX_TIMESTAMP(DATE_SUB(now(), interval 8 hour)) AND mid = #{mid} LIMIT 1
+		SELECT * FROM Plogs WHERE UNIX_TIMESTAMP(recordtm) > UNIX_TIMESTAMP(DATE_SUB(now(), interval 8 hour)) 
+		AND mid = #{mid} LIMIT 1 ORDER by recordtm DESC
 	</select>
 	
 	<insert id="addLogForMember" parameterType="com.mgs.entity.Plog">

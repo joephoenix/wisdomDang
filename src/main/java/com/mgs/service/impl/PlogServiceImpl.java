@@ -71,4 +71,9 @@ public class PlogServiceImpl implements PlogService {
 		return rlts;
 	}
 
+	@Override
+	public Plog getLastLog4ChooseMember(String mid) {
+		return plogDAO.getLastLogOfMember(mid);
+	}
+
 }

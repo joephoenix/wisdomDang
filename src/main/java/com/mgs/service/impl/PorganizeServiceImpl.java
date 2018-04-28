@@ -38,7 +38,16 @@ public class PorganizeServiceImpl implements PorganizeService {
 
 	@Override
 	public List<Porganize> ergodicSubOrganizes(String fid) {
-		return porganizeDAO.querySubOrganizes(fid);
+		// 递归遍历所有的子组织
+		List<Porganize> subOrgs = porganizeDAO.querySubOrganizes(fid);
+		if (null == subOrgs || 0 == subOrgs.size()) {
+			return subOrgs;
+		} else {
+			for (Porganize po : subOrgs) {
+				subOrgs.addAll(ergodicSubOrganizes(po.getId()));
+			}
+			return subOrgs;
+		}
 	}
 
 	@Override

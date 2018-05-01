@@ -30,6 +30,47 @@ public class OrganizeController {
 	@Autowired
 	private RelationMOService relationMOService;
 
+	@RequestMapping("/subOrgList,method=RequestMethod.POST")
+	@ResponseBody
+	public Map<String, Object> viewSubOrgs(String fOrgid, String username) {
+		Map<String, Object> mrlt = new HashMap<String, Object>();
+		if (null == username) {
+			mrlt.put("code", "ParametersError");
+			return mrlt;
+		}
+		Pmember mem = new Pmember();
+		Map<String, Object> memst = pmemberService.checkUserState(username);
+		if (!memst.get("code").equals("OK")) {
+			mrlt.put("code", memst.get("code"));
+			return mrlt;
+		} else {
+			mem = (Pmember) memst.get("member");
+			String memID = pmemberService.isLoginState(mem);
+			if (null == memID || "NotLogin" == memID) {
+				mrlt.put("code", "PermissionBanished");
+				return mrlt;
+			} else {
+				List<Porganize> subOrgs = porganizeService.ergodicSubOrganizes(fOrgid);
+				if (null == subOrgs || 0 == subOrgs.size()) {
+					mrlt.put("code", "SomeErrorAppeared");
+					return mrlt;
+				} else {
+					List<OrgView> ovList = new ArrayList<OrgView>();
+					for (Porganize org : subOrgs) {
+						OrgView rov = new OrgView();
+						rov.setOrgId(org.getId());
+						rov.setOrgName(org.getOname());
+						rov.setOrgOrder(org.getOorder());
+						ovList.add(rov);
+					}
+					mrlt.put("result", ovList);
+					mrlt.put("code", "successfully");
+					return mrlt;
+				}
+			}
+		}
+	}
+
 	@RequestMapping("/viewOrgList,method=RequestMethod.POST")
 	@ResponseBody
 	public Map<String, Object> viewOrganizeList(String username) {
@@ -55,13 +96,19 @@ public class OrganizeController {
 					mrlt.put("code", "SomeErrorAppeared");
 					return mrlt;
 				} else {
+					List<OrgView> ovList = new ArrayList<OrgView>();
 					String orgId = lstRMO1.get(0).getOid();
+					Porganize fOrg = porganizeService.getOrganizeInfo(orgId);
+					OrgView fov = new OrgView();
+					fov.setOrgId(fOrg.getId());
+					fov.setOrgName(fOrg.getOname());
+					fov.setOrgOrder(fOrg.getOorder());
+					ovList.add(fov);
 					List<Porganize> subOrgs = porganizeService.ergodicSubOrganizes(orgId);
 					if (null == subOrgs || 0 == subOrgs.size()) {
 						mrlt.put("code", "SomeErrorAppeared");
 						return mrlt;
 					} else {
-						List<OrgView> ovList = new ArrayList<OrgView>();
 						for (Porganize org : subOrgs) {
 							OrgView rov = new OrgView();
 							rov.setOrgId(org.getId());

@@ -18,7 +18,6 @@ import com.mgs.entity.RelationMO;
 import com.mgs.service.PlogService;
 import com.mgs.service.PmemberService;
 import com.mgs.service.PorganizeService;
-import com.mgs.service.PowerService;
 import com.mgs.service.RelationService;
 import com.mgs.view.MemberView;
 
@@ -126,7 +125,7 @@ public class MemberController {
 
 	@RequestMapping("/memberList, method=RequestMethod.POST")
 	@ResponseBody
-	public Map<String, Object> viewMemberList(String username) {
+	public Map<String, Object> showMemberList(String username) {
 		Map<String, Object> mrlt = new HashMap<String, Object>();
 		if (null == username) {
 			mrlt.put("code", "ParametersError");
@@ -187,7 +186,7 @@ public class MemberController {
 
 	@RequestMapping("/memberLogs,method=RequestMethod.POST")
 	@ResponseBody
-	public Map<String, Object> viewMemberLoglist(String username, String memid) {
+	public Map<String, Object> ShowMemberLogs(String username, String memid) {
 		Map<String, Object> mrlt = new HashMap<String, Object>();
 		if (null == username) {
 			mrlt.put("code", "ParametersError");

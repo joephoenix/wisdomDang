@@ -28,9 +28,9 @@ public class FilemanagerController {
 	@Autowired
 	private PmemberService pmemberService;
 
-	@RequestMapping("/listStudyFiles,method=RequestMethod.POST")
+	@RequestMapping("/showStudyFiles,method=RequestMethod.POST")
 	@ResponseBody
-	public Map<String, Object> listStudyFiles(String username) {
+	public Map<String, Object> showStudyFiles(String username) {
 		Map<String, Object> mrlt = new HashMap<String, Object>();
 		if (null == username) {
 			mrlt.put("code", "ParametersError");

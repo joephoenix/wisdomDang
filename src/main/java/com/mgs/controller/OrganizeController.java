@@ -30,9 +30,9 @@ public class OrganizeController {
 	@Autowired
 	private RelationMOService relationMOService;
 
-	@RequestMapping("/subOrgList,method=RequestMethod.POST")
+	@RequestMapping("/showSubOrgs,method=RequestMethod.POST")
 	@ResponseBody
-	public Map<String, Object> viewSubOrgs(String fOrgid, String username) {
+	public Map<String, Object> showSubOrgs(String fOrgid, String username) {
 		Map<String, Object> mrlt = new HashMap<String, Object>();
 		if (null == username) {
 			mrlt.put("code", "ParametersError");
@@ -71,9 +71,9 @@ public class OrganizeController {
 		}
 	}
 
-	@RequestMapping("/viewOrgList,method=RequestMethod.POST")
+	@RequestMapping("/showOrgList,method=RequestMethod.POST")
 	@ResponseBody
-	public Map<String, Object> viewOrganizeList(String username) {
+	public Map<String, Object> showOrgList(String username) {
 		Map<String, Object> mrlt = new HashMap<String, Object>();
 		if (null == username) {
 			mrlt.put("code", "ParametersError");

@@ -11,13 +11,13 @@ import test.msg.BaseUnitTest;
 public class RoleServiceTest extends BaseUnitTest {
 
 	@Autowired
-	private static RoleService roleService;
+	private RoleService roleService;
 
 	@Test
 	public void testGenerateRole() {
 		Role role = new Role(); 
-		role.setRname("shuji");
-		role.setRdesc("支部书记");
+		role.setRname("dangyuan");
+		role.setRdesc("普通党员");
 		role.setCreater("0");
 		String id = roleService.generateNewRole(role);
 		Role nr = roleService.getChooseRoleById(id);

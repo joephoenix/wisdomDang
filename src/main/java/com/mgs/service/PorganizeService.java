@@ -12,7 +12,7 @@ public interface PorganizeService {
 
 	List<Porganize> viewEntireOrganizes();
 
-	List<Porganize> ergodicSubOrganizes(String fid);
+	void ergodicSubOrganizes(String fid, List<Porganize> result);
 
 	int modifyNameForOrganize(String name, String id);
 

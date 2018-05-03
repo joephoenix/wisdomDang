@@ -150,7 +150,8 @@ public class MemberController {
 				return mrlt;
 			} else {
 				String orgId = lstRMO1.get(0).getOid();
-				List<Porganize> subOrgs = porganizeService.ergodicSubOrganizes(orgId);
+				List<Porganize> subOrgs = new ArrayList<Porganize>();
+				porganizeService.ergodicSubOrganizes(orgId, subOrgs);
 				if (null == subOrgs || 0 == subOrgs.size()) {
 					mrlt.put("code", "SomeErrorAppeared");
 					return mrlt;
@@ -212,7 +213,7 @@ public class MemberController {
 		}
 	}
 
-	@RequestMapping("/memberLogs,method=RequestMethod.POST")
+	@RequestMapping("/showMenu,method=RequestMethod.POST")
 	@ResponseBody
 	public Map<String, Object> showMenus(String username) {
 		Map<String, Object> mrlt = new HashMap<String, Object>();

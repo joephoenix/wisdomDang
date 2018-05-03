@@ -2,6 +2,7 @@ package test.msg.service;
 
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.mgs.entity.Pmember;
@@ -15,6 +16,7 @@ public class PmemberServiceTest extends BaseUnitTest {
 	private PmemberService pmemberService;
 
 	@Test
+	@Ignore
 	public void testAddNewMember() {
 		Pmember npm = new Pmember();
 		npm.setUname("Admin");
@@ -33,6 +35,7 @@ public class PmemberServiceTest extends BaseUnitTest {
 	}
 
 	@Test
+	@Ignore
 	public void testGetMembers() {
 		List<Pmember> ms = pmemberService.queryMembersByCondition("");
 		if (ms.size() > 0) {
@@ -46,5 +49,10 @@ public class PmemberServiceTest extends BaseUnitTest {
 		} else {
 			System.out.println("there are no data!");
 		}
+	}
+	
+	@Test
+	public void showMenus() {
+		
 	}
 }

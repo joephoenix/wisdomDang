@@ -12,13 +12,18 @@ import com.mgs.service.PowerService;
 
 @Service
 public class PowerServiceImpl implements PowerService {
-	
+
 	@Resource
 	private PowerDAO powerDAO;
 
 	@Override
 	public Power getPowerInfomation(String id) {
 		return powerDAO.getPowerInfoByPrimaryKey(id);
+	}
+
+	@Override
+	public List<Power> queryEntirePowers() {
+		return powerDAO.queryEntierPowers();
 	}
 
 	@Override
@@ -39,12 +44,10 @@ public class PowerServiceImpl implements PowerService {
 	@Override
 	public String generateNewPowerReturnPrimarykey(Power power) {
 		Integer rlt = powerDAO.addNewPower(power);
-		if(rlt > 0) {
+		if (rlt > 0) {
 			return power.getId();
-		}
-		else {
+		} else {
 			return "generate new power failed";
 		}
 	}
-
 }

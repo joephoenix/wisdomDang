@@ -15,10 +15,10 @@ public class PowerServiceTest extends BaseUnitTest {
 	@Test
 	public void testGenerateMethod() {
 		Power power = new Power();
-		power.setPname("indexPageVisit");
-		power.setPcode("index-01-01");
-		power.setPtype(1);
-		power.setPlevel(1);
+		power.setPname("文件详情");
+		power.setPcode("file-03-01");
+		power.setPtype(2);
+		power.setPlevel(3);
 		power.setCreater("244fd581-3b06-11e8-b744-525400368cb9");
 		String pid = powerService.generateNewPowerReturnPrimarykey(power);
 		//query new power infomation

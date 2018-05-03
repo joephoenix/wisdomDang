@@ -32,26 +32,54 @@ public class RelationPRServiceTest extends BaseUnitTest {
 	private PmemberService pmemberService;
 
 	@Test
-	@Ignore
-	public void testGivePower2Role() {
+	public void testDangyuanPower4() {
+		String[] dyPid = { "863c0602-4de4-11e8-b744-525400368cb9", "fd52d09f-4de4-11e8-b744-525400368cb9",
+				"c6d4f601-4de5-11e8-b744-525400368cb9", "df48442d-4de5-11e8-b744-525400368cb9",
+				"fa4ea844-4de5-11e8-b744-525400368cb9" };
 		RelationPR np2r = new RelationPR();
-		Role role = roleService.getRoleByNamesearch("admin");
+		Role role = roleService.getRoleByNamesearch("dangyuan");
 		assert role != null;
-		np2r.setRid(role.getId());
-		List<Power> powers = powerService.findPowerListWithName("indexPageVisit");
-		assert powers != null;
-		assert powers.size() > 0;
-		np2r.setPid(powers.get(0).getId());
 		List<Pmember> mbs = pmemberService.queryMembersByCondition("Admin");
 		assert mbs != null;
 		assert mbs.size() > 0;
-		np2r.setCreater(mbs.get(0).getId());
-		String prid = relationPRService.givePower2Role(np2r);
-		assert prid != null;
-		System.out.println("give power to role successfully! the id is " + prid);
+		for(String pid : dyPid) {
+			np2r.setRid(role.getId());
+			np2r.setPid(pid);
+			np2r.setCreater(mbs.get(0).getId());
+			String prid = relationPRService.givePower2Role(np2r);
+			assert prid != null;
+			System.out.println("give power to role successfully! the id is " + prid);
+		}
+	}
+
+	/**
+	 * 测试方法，把角色赋给用户
+	 */
+	@Test
+	@Ignore
+	public void testGivePower2Role() {
+		RelationPR np2r = new RelationPR();
+		Role role = roleService.getRoleByNamesearch("shuji");
+		assert role != null;
+		List<Power> powers = powerService.queryEntirePowers();
+		assert powers != null;
+		assert powers.size() > 0;
+		List<Pmember> mbs = pmemberService.queryMembersByCondition("Admin");
+		assert mbs != null;
+		assert mbs.size() > 0;
+		for (Power pw : powers) {
+			np2r.setRid(role.getId());
+			np2r.setPid(pw.getId());
+			np2r.setCreater(mbs.get(0).getId());
+			String prid = relationPRService.givePower2Role(np2r);
+			assert prid != null;
+			System.out.println("give power to role successfully! the id is " + prid);
+		}
+
 	}
 
 	@Test
+	@Ignore
 	public void testGetPowerList() {
 		Role role = roleService.getRoleByNamesearch("admin");
 		assert role != null;

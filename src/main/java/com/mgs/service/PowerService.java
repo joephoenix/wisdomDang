@@ -7,6 +7,8 @@ import com.mgs.entity.Power;
 public interface PowerService {
 
 	Power getPowerInfomation(String id);
+	
+	List<Power> queryEntirePowers();
 
 	List<Power> findPowerListWithName(String name);
 

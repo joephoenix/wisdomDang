@@ -50,7 +50,8 @@ public class OrganizeController {
 				mrlt.put("code", "PermissionBanished");
 				return mrlt;
 			} else {
-				List<Porganize> subOrgs = porganizeService.ergodicSubOrganizes(fOrgid);
+				List<Porganize> subOrgs = new ArrayList<Porganize>();
+				porganizeService.ergodicSubOrganizes(fOrgid, subOrgs);
 				if (null == subOrgs || 0 == subOrgs.size()) {
 					mrlt.put("code", "SomeErrorAppeared");
 					return mrlt;
@@ -104,7 +105,8 @@ public class OrganizeController {
 					fov.setOrgName(fOrg.getOname());
 					fov.setOrgOrder(fOrg.getOorder());
 					ovList.add(fov);
-					List<Porganize> subOrgs = porganizeService.ergodicSubOrganizes(orgId);
+					List<Porganize> subOrgs = new ArrayList<Porganize>();
+					porganizeService.ergodicSubOrganizes(orgId, subOrgs);
 					if (null == subOrgs || 0 == subOrgs.size()) {
 						mrlt.put("code", "SomeErrorAppeared");
 						return mrlt;

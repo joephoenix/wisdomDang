@@ -7,7 +7,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mgs.entity.Pmember;
@@ -17,6 +19,7 @@ import com.mgs.service.PmemberService;
 import com.mgs.service.PorganizeService;
 import com.mgs.service.RelationMOService;
 import com.mgs.view.OrgView;
+import com.mgs.view.Rqbody;
 
 @Controller
 public class OrganizeController {
@@ -30,10 +33,12 @@ public class OrganizeController {
 	@Autowired
 	private RelationMOService relationMOService;
 
-	@RequestMapping("/showSubOrgs,method=RequestMethod.POST")
+	@RequestMapping(value = "/showSubOrgs", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> showSubOrgs(String fOrgid, String username) {
+	public Map<String, Object> showSubOrgs(@RequestBody Rqbody body) {
 		Map<String, Object> mrlt = new HashMap<String, Object>();
+		String username = body.getUsername();
+		String fOrgid = body.getfOrgid();
 		if (null == username) {
 			mrlt.put("code", "ParametersError");
 			return mrlt;
@@ -72,10 +77,11 @@ public class OrganizeController {
 		}
 	}
 
-	@RequestMapping("/showOrgList,method=RequestMethod.POST")
+	@RequestMapping(value = "/showOrgList", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> showOrgList(String username) {
+	public Map<String, Object> showOrgList(@RequestBody Rqbody body) {
 		Map<String, Object> mrlt = new HashMap<String, Object>();
+		String username = body.getUsername();
 		if (null == username) {
 			mrlt.put("code", "ParametersError");
 			return mrlt;

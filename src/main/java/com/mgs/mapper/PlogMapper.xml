@@ -23,12 +23,12 @@
 	</select>
 	
 	<select id="getLastLogOfMember" resultType="com.mgs.entity.Plog">
-		SELECT * FROM Plogs WHERE mid = #{mid} LIMIT 1 ORDER by recordtm DESC
+		SELECT * FROM Plogs WHERE mid = #{mid} ORDER by recordtm DESC LIMIT 1
 	</select>
 	
 	<select id="getLastLogOfMember8hours" resultType="com.mgs.entity.Plog">
 		SELECT * FROM Plogs WHERE UNIX_TIMESTAMP(recordtm) > UNIX_TIMESTAMP(DATE_SUB(now(), interval 8 hour)) 
-		AND mid = #{mid} LIMIT 1 ORDER by recordtm DESC
+		AND mid = #{mid} ORDER by recordtm DESC LIMIT 1
 	</select>
 	
 	<insert id="addLogForMember" parameterType="com.mgs.entity.Plog">

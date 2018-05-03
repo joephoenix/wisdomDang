@@ -7,7 +7,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mgs.entity.Plog;
@@ -20,6 +22,7 @@ import com.mgs.service.PmemberService;
 import com.mgs.service.PorganizeService;
 import com.mgs.service.RelationService;
 import com.mgs.view.MemberView;
+import com.mgs.view.Rqbody;
 
 @Controller
 public class MemberController {
@@ -36,14 +39,22 @@ public class MemberController {
 	@Autowired
 	private RelationService relationService;
 
-	@RequestMapping("/appLogin,method=RequestMethod.POST")
+	@RequestMapping(value = "/appLogin", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> appLoginAction(String username, String password, String longtude, String latitude) {
+	public Map<String, Object> appLoginAction(@RequestBody Rqbody body) {
+		// read the parameters
+		String username = body.getUsername();
+		String longtude = body.getLongtude();
+		String latitude = body.getLatitude();
+		String password = body.getPassword();
+		// create return parameter
 		Map<String, Object> mrlt = new HashMap<String, Object>();
+		// verify
 		if (null == username || null == longtude || null == latitude) {
 			mrlt.put("code", "ParametersError");
 			return mrlt;
 		}
+		// get the member state
 		Pmember mem = new Pmember();
 		Map<String, Object> memst = pmemberService.checkUserState(username);
 		if (!memst.get("code").equals("OK")) {
@@ -64,7 +75,7 @@ public class MemberController {
 					loginLog.setLongitude(longtude);
 					loginLog.setMid(mem.getId());
 					plogService.addLogForMember(loginLog);
-					mrlt.put("code", "successful");
+					mrlt.put("code", "AttendSuccessful");
 					return mrlt;
 				}
 			} else {
@@ -73,16 +84,18 @@ public class MemberController {
 				loginLog.setLatitude(latitude);
 				loginLog.setMid(memID);
 				plogService.addLogForMember(loginLog);
-				mrlt.put("code", "LogApperSuccessful");
+				mrlt.put("code", "LoginSuccessful");
 				return mrlt;
 			}
 		}
 	}
 
-	@RequestMapping("/normalLogin,method=RequestMethod.POST")
+	@RequestMapping(value = "/normalLogin", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> loginAction(String username, String password) {
+	public Map<String, Object> loginAction(@RequestBody Rqbody body) {
 		Map<String, Object> mrlt = new HashMap<String, Object>();
+		String username = body.getUsername();
+		String password = body.getPassword();
 		if (null == username) {
 			mrlt.put("code", "ParametersError");
 			return mrlt;
@@ -107,7 +120,7 @@ public class MemberController {
 					loginLog.setLatitude("30.600326");
 					loginLog.setMid(mem.getId());
 					plogService.addLogForMember(loginLog);
-					mrlt.put("code", "ParametersError");
+					mrlt.put("code", "AttendSuccessful");
 					return mrlt;
 				}
 			} else {
@@ -116,17 +129,18 @@ public class MemberController {
 				loginLog.setLatitude("30.600326");
 				loginLog.setMid(memID);
 				plogService.addLogForMember(loginLog);
-				mrlt.put("code", "ParametersError");
+				mrlt.put("code", "LoginSuccessful");
 				return mrlt;
 			}
 		}
 
 	}
 
-	@RequestMapping("/memberList, method=RequestMethod.POST")
+	@RequestMapping(value = "/memberList", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> showMemberList(String username) {
+	public Map<String, Object> showMemberList(@RequestBody Rqbody body) {
 		Map<String, Object> mrlt = new HashMap<String, Object>();
+		String username = body.getUsername();
 		if (null == username) {
 			mrlt.put("code", "ParametersError");
 			return mrlt;
@@ -185,10 +199,12 @@ public class MemberController {
 
 	}
 
-	@RequestMapping("/memberLogs,method=RequestMethod.POST")
+	@RequestMapping(value = "/memberLogs", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> ShowMemberLogs(String username, String memid) {
+	public Map<String, Object> ShowMemberLogs(@RequestBody Rqbody body) {
 		Map<String, Object> mrlt = new HashMap<String, Object>();
+		String username = body.getUsername();
+		String memid = body.getMemid();
 		if (null == username) {
 			mrlt.put("code", "ParametersError");
 			return mrlt;
@@ -213,10 +229,11 @@ public class MemberController {
 		}
 	}
 
-	@RequestMapping("/showMenu,method=RequestMethod.POST")
+	@RequestMapping(value = "/showMenu", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> showMenus(String username) {
+	public Map<String, Object> showMenus(@RequestBody Rqbody body) {
 		Map<String, Object> mrlt = new HashMap<String, Object>();
+		String username = body.getUsername();
 		if (null == username) {
 			mrlt.put("code", "ParametersError");
 			return mrlt;

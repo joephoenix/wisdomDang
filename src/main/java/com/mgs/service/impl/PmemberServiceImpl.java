@@ -51,7 +51,7 @@ public class PmemberServiceImpl implements PmemberService {
 	@Override
 	public Map<String, Object> checkUserState(String username) {
 		Map<String, Object> rm = new HashMap<String, Object>();
-		List<Pmember> memList = pmemberDAO.queryEntireMembers();
+		List<Pmember> memList = pmemberDAO.queryMembersByUsername(username);
 		if (null == memList || 0 == memList.size()) {
 			rm.put("code", "UserNotExist");
 			return rm;
@@ -69,13 +69,16 @@ public class PmemberServiceImpl implements PmemberService {
 	public String isLoginState(Pmember pmb) {
 		String memID = pmb.getId();
 		Plog lastLog = plogDAO.getLastLogOfMember(memID);
-		Date now = new Date();
-		int seconds = (int) (now.getTime() - lastLog.getRecordtm().getTime() / 1000 / 60);
-		if (seconds > 30) {
+		if (null == lastLog) {
 			return "NotLogin";
 		} else {
-			return memID;
+			Date now = new Date();
+			int seconds = (int) ((now.getTime() - lastLog.getRecordtm().getTime()) / 1000 / 60);
+			if (seconds > 30) {
+				return "NotLogin";
+			} else {
+				return memID;
+			}
 		}
 	}
-
 }

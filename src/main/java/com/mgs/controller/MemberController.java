@@ -1,7 +1,6 @@
 package com.mgs.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.mgs.entity.Plog;
 import com.mgs.entity.Pmember;
 import com.mgs.entity.Porganize;
@@ -39,35 +39,37 @@ public class MemberController {
 	@Autowired
 	private RelationService relationService;
 
-	@RequestMapping(value = "/appLogin", method = RequestMethod.POST)
+	@RequestMapping(value = "/appLogin", method = RequestMethod.POST, consumes = "application/json")
 	@ResponseBody
-	public Map<String, Object> appLoginAction(@RequestBody Rqbody body) {
+	public JSONObject appLoginAction(@RequestBody Rqbody body) {
+		JSONObject jsonObject = new JSONObject();
 		// read the parameters
 		String username = body.getUsername();
 		String longtude = body.getLongtude();
 		String latitude = body.getLatitude();
 		String password = body.getPassword();
-		// create return parameter
-		Map<String, Object> mrlt = new HashMap<String, Object>();
 		// verify
 		if (null == username || null == longtude || null == latitude) {
-			mrlt.put("code", "ParametersError");
-			return mrlt;
+			jsonObject.put("message", "ParametersError");
+			jsonObject.put("status", "error");
+			return jsonObject;
 		}
 		// get the member state
 		Pmember mem = new Pmember();
 		Map<String, Object> memst = pmemberService.checkUserState(username);
 		if (!memst.get("code").equals("OK")) {
-			mrlt.put("code", memst.get("code"));
-			return mrlt;
+			jsonObject.put("message", memst.get("code"));
+			jsonObject.put("status", "error");
+			return jsonObject;
 		} else {
 			mem = (Pmember) memst.get("member");
 			String memID = pmemberService.isLoginState(mem);
 			if (null == memID || "NotLogin" == memID) {
 				String cpwd = mem.getPword();
 				if (!cpwd.equals(password)) {
-					mrlt.put("code", "ParametersError");
-					return mrlt;
+					jsonObject.put("message", "ParametersError");
+					jsonObject.put("status", "error");
+					return jsonObject;
 				} else {
 					// record login log
 					Plog loginLog = new Plog();
@@ -75,8 +77,9 @@ public class MemberController {
 					loginLog.setLongitude(longtude);
 					loginLog.setMid(mem.getId());
 					plogService.addLogForMember(loginLog);
-					mrlt.put("code", "AttendSuccessful");
-					return mrlt;
+					jsonObject.put("message", "attend");
+					jsonObject.put("status", "success");
+					return jsonObject;
 				}
 			} else {
 				Plog loginLog = new Plog();
@@ -84,35 +87,39 @@ public class MemberController {
 				loginLog.setLatitude(latitude);
 				loginLog.setMid(memID);
 				plogService.addLogForMember(loginLog);
-				mrlt.put("code", "LoginSuccessful");
-				return mrlt;
+				jsonObject.put("message", "Login");
+				jsonObject.put("status", "success");
+				return jsonObject;
 			}
 		}
 	}
 
-	@RequestMapping(value = "/normalLogin", method = RequestMethod.POST)
+	@RequestMapping(value = "/normalLogin", method = RequestMethod.POST, consumes = "application/json")
 	@ResponseBody
-	public Map<String, Object> loginAction(@RequestBody Rqbody body) {
-		Map<String, Object> mrlt = new HashMap<String, Object>();
+	public JSONObject loginAction(@RequestBody Rqbody body) {
+		JSONObject jsonObject = new JSONObject();
 		String username = body.getUsername();
 		String password = body.getPassword();
 		if (null == username) {
-			mrlt.put("code", "ParametersError");
-			return mrlt;
+			jsonObject.put("message", "ParametersError");
+			jsonObject.put("status", "error");
+			return jsonObject;
 		}
 		Pmember mem = new Pmember();
 		Map<String, Object> memst = pmemberService.checkUserState(username);
 		if (!memst.get("code").equals("OK")) {
-			mrlt.put("code", memst.get("code"));
-			return mrlt;
+			jsonObject.put("message", memst.get("code"));
+			jsonObject.put("status", "error");
+			return jsonObject;
 		} else {
 			mem = (Pmember) memst.get("member");
 			String memID = pmemberService.isLoginState(mem);
 			if (null == memID || "NotLogin" == memID) {
 				String cpwd = mem.getPword();
 				if (!cpwd.equals(password)) {
-					mrlt.put("code", "ParametersError");
-					return mrlt;
+					jsonObject.put("message", "ParametersError");
+					jsonObject.put("status", "error");
+					return jsonObject;
 				} else {
 					// record login log
 					Plog loginLog = new Plog();
@@ -120,8 +127,9 @@ public class MemberController {
 					loginLog.setLatitude("30.600326");
 					loginLog.setMid(mem.getId());
 					plogService.addLogForMember(loginLog);
-					mrlt.put("code", "AttendSuccessful");
-					return mrlt;
+					jsonObject.put("message", "Attend");
+					jsonObject.put("status", "success");
+					return jsonObject;
 				}
 			} else {
 				Plog loginLog = new Plog();
@@ -129,46 +137,52 @@ public class MemberController {
 				loginLog.setLatitude("30.600326");
 				loginLog.setMid(memID);
 				plogService.addLogForMember(loginLog);
-				mrlt.put("code", "LoginSuccessful");
-				return mrlt;
+				jsonObject.put("message", "Login");
+				jsonObject.put("status", "success");
+				return jsonObject;
 			}
 		}
 
 	}
 
-	@RequestMapping(value = "/memberList", method = RequestMethod.POST)
+	@RequestMapping(value = "/memberList", method = RequestMethod.POST, consumes = "application/json")
 	@ResponseBody
-	public Map<String, Object> showMemberList(@RequestBody Rqbody body) {
-		Map<String, Object> mrlt = new HashMap<String, Object>();
+	public JSONObject showMemberList(@RequestBody Rqbody body) {
+		JSONObject jsonObject = new JSONObject();
 		String username = body.getUsername();
 		if (null == username) {
-			mrlt.put("code", "ParametersError");
-			return mrlt;
+			jsonObject.put("message", "ParametersError");
+			jsonObject.put("status", "error");
+			return jsonObject;
 		}
 		Pmember pm = new Pmember();
 		Map<String, Object> memst = pmemberService.checkUserState(username);
 		if (memst.get("code").equals("OK")) {
 			pm = (Pmember) memst.get("member");
 		} else {
-			mrlt.put("code", memst.get("code"));
-			return mrlt;
+			jsonObject.put("message", memst.get("code"));
+			jsonObject.put("status", "error");
+			return jsonObject;
 		}
 		String memID = pmemberService.isLoginState(pm);
 		if ("NotLogin" == memID) {
-			mrlt.put("code", memID);
-			return mrlt;
+			jsonObject.put("message", memID);
+			jsonObject.put("status", "error");
+			return jsonObject;
 		} else {
 			List<RelationMO> lstRMO1 = relationService.findReltionsByMember(memID);
 			if (null == lstRMO1 || 0 == lstRMO1.size()) {
-				mrlt.put("code", "SomeErrorAppeared");
-				return mrlt;
+				jsonObject.put("message", "SomeErrorAppeared");
+				jsonObject.put("status", "error");
+				return jsonObject;
 			} else {
 				String orgId = lstRMO1.get(0).getOid();
 				List<Porganize> subOrgs = new ArrayList<Porganize>();
 				porganizeService.ergodicSubOrganizes(orgId, subOrgs);
 				if (null == subOrgs || 0 == subOrgs.size()) {
-					mrlt.put("code", "SomeErrorAppeared");
-					return mrlt;
+					jsonObject.put("message", "SomeErrorAppeared");
+					jsonObject.put("status", "error");
+					return jsonObject;
 				} else {
 					List<MemberView> mvlst = new ArrayList<MemberView>();
 					for (Porganize org : subOrgs) {
@@ -190,70 +204,79 @@ public class MemberController {
 						}
 
 					}
-					mrlt.put("result", mvlst);
-					mrlt.put("code", "successfully");
-					return mrlt;
+					jsonObject.put("result", mvlst);
+					jsonObject.put("message", "getMemberViewList");
+					jsonObject.put("status", "success");
+					return jsonObject;
 				}
 			}
 		}
 
 	}
 
-	@RequestMapping(value = "/memberLogs", method = RequestMethod.POST)
+	@RequestMapping(value = "/memberLogs", method = RequestMethod.POST, consumes = "application/json")
 	@ResponseBody
-	public Map<String, Object> ShowMemberLogs(@RequestBody Rqbody body) {
-		Map<String, Object> mrlt = new HashMap<String, Object>();
+	public JSONObject ShowMemberLogs(@RequestBody Rqbody body) {
+		JSONObject jsonObject = new JSONObject();
 		String username = body.getUsername();
 		String memid = body.getMemid();
 		if (null == username) {
-			mrlt.put("code", "ParametersError");
-			return mrlt;
+			jsonObject.put("message", "ParametersError");
+			jsonObject.put("status", "error");
+			return jsonObject;
 		}
 		Pmember mem = new Pmember();
 		Map<String, Object> memst = pmemberService.checkUserState(username);
 		if (!memst.get("code").equals("OK")) {
-			mrlt.put("code", memst.get("code"));
-			return mrlt;
+			jsonObject.put("message", memst.get("code"));
+			jsonObject.put("status", "error");
+			return jsonObject;
 		} else {
 			mem = (Pmember) memst.get("member");
 			String memID = pmemberService.isLoginState(mem);
 			if (null == memID || "NotLogin" == memID) {
-				mrlt.put("code", "PermissionBanished");
-				return mrlt;
+				jsonObject.put("message", "PermissionBanished");
+				jsonObject.put("status", "error");
+				return jsonObject;
 			} else {
 				List<Plog> mLoglist = plogService.queryLogsByMember(memid);
-				mrlt.put("code", "OK");
-				mrlt.put("logs", mLoglist);
-				return mrlt;
+				jsonObject.put("logs", mLoglist);
+				jsonObject.put("message", "getMemberLogs");
+				jsonObject.put("status", "success");
+				return jsonObject;
 			}
 		}
 	}
 
-	@RequestMapping(value = "/showMenu", method = RequestMethod.POST)
+	@RequestMapping(value = "/showMenu", method = RequestMethod.POST, consumes = "application/json")
 	@ResponseBody
-	public Map<String, Object> showMenus(@RequestBody Rqbody body) {
-		Map<String, Object> mrlt = new HashMap<String, Object>();
+	public JSONObject showMenus(@RequestBody Rqbody body) {
+		JSONObject jsonObject = new JSONObject();
 		String username = body.getUsername();
 		if (null == username) {
-			mrlt.put("code", "ParametersError");
-			return mrlt;
+			jsonObject.put("message", "ParametersError");
+			jsonObject.put("status", "error");
+			return jsonObject;
 		}
 		Pmember mem = new Pmember();
 		Map<String, Object> memst = pmemberService.checkUserState(username);
 		if (!memst.get("code").equals("OK")) {
-			mrlt.put("code", memst.get("code"));
-			return mrlt;
+			jsonObject.put("message", memst.get("code"));
+			jsonObject.put("status", "error");
+			return jsonObject;
 		} else {
 			mem = (Pmember) memst.get("member");
 			String memID = pmemberService.isLoginState(mem);
 			if (null == memID || "NotLogin" == memID) {
-				mrlt.put("code", "PermissionBanished");
-				return mrlt;
+				jsonObject.put("message", "PermissionBanished");
+				jsonObject.put("status", "error");
+				return jsonObject;
 			} else {
 				List<Power> rplist = relationService.lstMenuByMemberId(memID);
-				mrlt.put("code", "getMenuSuccess");
-				mrlt.put("menu", rplist);
-				return mrlt;
+				jsonObject.put("menus", rplist);
+				jsonObject.put("message", "getMenus");
+				jsonObject.put("status", "success");
+				return jsonObject;
 			}
 		}
 	}

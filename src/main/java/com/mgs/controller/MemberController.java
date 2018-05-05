@@ -248,6 +248,39 @@ public class MemberController {
 		}
 	}
 
+	@RequestMapping(value = "/memberInfo", method = RequestMethod.POST, consumes = "application/json")
+	@ResponseBody
+	public JSONObject getMemberInfo(@RequestBody Rqbody body) {
+		JSONObject jsonObject = new JSONObject();
+		String username = body.getUsername();
+		if (null == username) {
+			jsonObject.put("message", "ParametersError");
+			jsonObject.put("status", "error");
+			return jsonObject;
+		}
+		Pmember mem = new Pmember();
+		Map<String, Object> memst = pmemberService.checkUserState(username);
+		if (!memst.get("code").equals("OK")) {
+			jsonObject.put("message", memst.get("code"));
+			jsonObject.put("status", "error");
+			return jsonObject;
+		} else {
+			mem = (Pmember) memst.get("member");
+			String memID = pmemberService.isLoginState(mem);
+			if (null == memID || "NotLogin" == memID) {
+				jsonObject.put("message", "PermissionBanished");
+				jsonObject.put("status", "error");
+				return jsonObject;
+			} else {
+				Pmember rpm = pmemberService.getMemberInformation(memID);
+				jsonObject.put("memInfo", rpm);
+				jsonObject.put("message", "get memeber information");
+				jsonObject.put("status", "success");
+				return jsonObject;
+			}
+		}
+	}
+
 	@RequestMapping(value = "/showMenu", method = RequestMethod.POST, consumes = "application/json")
 	@ResponseBody
 	public JSONObject showMenus(@RequestBody Rqbody body) {

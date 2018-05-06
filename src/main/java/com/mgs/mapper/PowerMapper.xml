@@ -11,6 +11,7 @@
 		<result column="creater" jdbcType="VARCHAR" property="creater" />
 		<result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
 		<result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
+		<result column="pagelink" jdbcType="VARCHAR" property="pagelink" />
 	</resultMap>
 
 	<select id="getPowerInfoByPrimaryKey" resultType="com.mgs.entity.Power">
@@ -45,8 +46,8 @@
 		<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
 			select UUID()
 		</selectKey>
-		INSERT INTO Powers (id, pname, pcode, plevel, ptype, state, creater, ctime, mtime) 
-		   VALUES (#{id}, #{pname}, #{pcode}, #{plevel}, #{ptype}, 1, #{creater}, now(), now())
+		INSERT INTO Powers (id, pname, pcode, plevel, ptype, state, creater, ctime, mtime, pagelink) 
+		   VALUES (#{id}, #{pname}, #{pcode}, #{plevel}, #{ptype}, 1, #{creater}, now(), now(), #{pagelink})
 	</insert>
 
 	<update id="modifyPowerNameById">

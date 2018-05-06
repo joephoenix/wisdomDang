@@ -20,6 +20,7 @@ public class PowerServiceTest extends BaseUnitTest {
 		power.setPtype(2);
 		power.setPlevel(3);
 		power.setCreater("244fd581-3b06-11e8-b744-525400368cb9");
+		power.setPagelink("nopage");
 		String pid = powerService.generateNewPowerReturnPrimarykey(power);
 		//query new power infomation
 		Power p = powerService.getPowerInfomation(pid);

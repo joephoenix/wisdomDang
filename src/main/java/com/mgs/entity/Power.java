@@ -22,6 +22,8 @@ public class Power {
 
 	private Date mtime;
 
+	private String pagelink;
+
 	public String getId() {
 		return id;
 	}
@@ -92,6 +94,14 @@ public class Power {
 
 	public void setMtime(Date mtime) {
 		this.mtime = mtime;
+	}
+
+	public String getPagelink() {
+		return pagelink;
+	}
+
+	public void setPagelink(String pagelink) {
+		this.pagelink = pagelink;
 	}
 
 }

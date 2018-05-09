@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mgs.dao.DictionaryDAO">
+	<resultMap id="BaseResultMap" type="com.mgs.entity.Dictionary">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="dictname" jdbcType="VARCHAR" property="dictname" />
+		<result column="dictvalue" jdbcType="INTEGER" property="dictvalue" />
+		<result column="dictkey" jdbcType="VARCHAR" property="dictkey" />
+		<result column="state" jdbcType="INTEGER" property="state" />
+		<result column="creater" jdbcType="VARCHAR" property="creater" />
+		<result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+	</resultMap>
+
+	<select id="getDictionaryInfoByid" resultType="com.mgs.entity.Dictionary">
+		SELECT * FROM Dictionary WHERE id = #{id}
+	</select>
+
+	<select id="queryDictListBykey" resultType="com.mgs.entity.Dictionary">
+		SELECT * FROM Dictionary WHERE dictkey = #{key}
+	</select>
+	
+	<select id="queryEntireDictionarys" resultType="com.mgs.entity.Dictionary">
+		SELECT * FROM Dictionary WHERE state = 1
+	</select>
+	
+	<select id="queryAbandonDictionarys" resultType="com.mgs.entity.Dictionary">
+		SELECT * FROM Dictionary WHERE state = 0
+	</select>
+	
+	<insert id="generateNewDictionary" parameterType="com.mgs.entity.Dictionary">
+		<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+			select UUID()
+		</selectKey>
+		INSERT INTO Dictionary (id, dictname, dictvalue, dictkey, state, creater, ctime)
+		  VALUES (#{id}, #{dictname}, #{dictvalue}, #{dictkey}, 1, #{creater}, now())
+	</insert>
+
+	<update id="adjustDictionarValue">
+		UPDATE Dictionary SET dictkey = #{key} WHERE id = #{id}
+	</update>
+	
+	<update id="removeChooseDictionary">
+		UPDATE Dictionary SET state = 0 WHERE id = #{id}
+	</update>
+
+	<update id="reviseChooseDictionary">
+		UPDATE POrganizes SET state = 1 WHERE id = #{id}
+	</update>
+	
+</mapper>

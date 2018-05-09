@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mgs.dao.MemberInfoDAO">
+	<resultMap id="BaseResultMap" type="com.mgs.entity.MemberInfo">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="mid" jdbcType="VARCHAR" property="mid" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="sex" jdbcType="INTEGER" property="sex" />
+		<result column="cardno" jdbcType="VARCHAR" property="cardno" />
+		<result column="education" jdbcType="VARCHAR" property="education" />
+		<result column="university" jdbcType="VARCHAR" property="university" />
+		<result column="unit" jdbcType="VARCHAR" property="unit" />
+		<result column="position" jdbcType="VARCHAR" property="position" />
+		<result column="age" jdbcType="INTEGER" property="age" />
+		<result column="state" jdbcType="INTEGER" property="state" />
+		<result column="creater" jdbcType="VARCHAR" property="creater" />
+		<result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+	</resultMap>
+
+	<select id="getMemberDetailByid" resultType="com.mgs.entity.MemberInfo">
+		SELECT * FROM MemberInfo WHERE id = #{id}
+	</select>
+
+	<select id="queryMembersByage" resultType="com.mgs.entity.MemberInfo">
+		SELECT * FROM MemberInfo WHERE state = 1 and age = #{age}
+	</select>
+	
+	<select id="queryMembersBysex" resultType="com.mgs.entity.MemberInfo">
+		SELECT * FROM MemberInfo WHERE state = 1 and sex = #{sex}
+	</select>
+	
+	<select id="queryMembersByedu" resultType="com.mgs.entity.MemberInfo">
+		SELECT * FROM MemberInfo WHERE state = 1 and education = #{education}
+	</select>
+
+	<insert id="generateMemberInformation" parameterType="com.mgs.entity.MemberInfo">
+		<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+			select UUID()
+		</selectKey>
+		INSERT INTO MemberInfo (id, mid, name, sex, cardno, education, university, unit, position, age, state, creater, ctime)
+		VALUES (#{id}, #{mid}, #{name}, #{sex}, #{cardno}, #{education}, #{university}, #{unit}, #{position}, #{age}, 1, #{creater}, now())
+	</insert>
+
+	<update id="refreshMemberInformation" parameterType="com.mgs.entity.MemberInfo">
+		UPDATE MemberInfo SET 
+		age = #{age}, education = #{education}, 
+		university = #{university}, unit = #{unit}, 
+		position = #{position}  WHERE id = #{id}
+	</update>
+
+	<update id="removeChooseMemberinfo">
+		UPDATE MemberInfo SET state = 0 WHERE id = #{id}
+	</update>
+
+	<update id="reviseChooseMemberinfo">
+		UPDATE MemberInfo SET state = 1 WHERE id = #{id}
+	</update>
+
+</mapper>

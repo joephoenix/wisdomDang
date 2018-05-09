@@ -10,16 +10,16 @@ public interface FileReadLogDAO {
 
 	FileReadLog getLogDetailByPrimarykey(@Param("id") String id);
 
-	List<FileReadLog> queryReadlogByfileId(@Param("rst") Integer rst, @Param("id") String fid);
+	List<FileReadLog> queryReadlogByfileId(@Param("state") Integer state, @Param("id") String fid);
 
-	List<FileReadLog> queryReadlogByMemberid(@Param("rst") Integer rst, @Param("id") String mid);
+	List<FileReadLog> queryReadlogByMemberid(@Param("state") Integer state, @Param("id") String mid);
 
 	int sendSaveFileToMember(FileReadLog rlog);
 
 	int readOrOpenSaveFile(@Param("id") String id);
 
-	int closeSaveFile(@Param("id") String id);
+	int closeAndSaveFile(@Param("id") String id);
 
-	int trashSaveFile(@Param("id") String id);
+	int updateFilereadRatio(@Param("ratio") Integer ratio, @Param("id") String id);
 
 }

@@ -6,6 +6,7 @@
 		<result column="mid" jdbcType="VARCHAR" property="mid" />
 		<result column="longitude" jdbcType="VARCHAR" property="longitude" />
 		<result column="latitude" jdbcType="VARCHAR" property="latitude" />
+		<result column="isAttend" jdbcType="INTEGER" property="isAttend" />
 		<result column="recordtm" jdbcType="TIMESTAMP" property="recordtm" />
 	</resultMap>
 	
@@ -35,7 +36,7 @@
 		<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
 			select UUID()
 		</selectKey>
-		INSERT INTO Plogs (id, mid, longitude, latitude, recordtm)
-		 VALUES (#{id}, #{mid}, #{longitude}, #{latitude}, now())
+		INSERT INTO Plogs (id, mid, longitude, latitude, isAttend, recordtm)
+		 VALUES (#{id}, #{mid}, #{longitude}, #{latitude}, #{isAttend}, now())
 	</insert>	
 </mapper>

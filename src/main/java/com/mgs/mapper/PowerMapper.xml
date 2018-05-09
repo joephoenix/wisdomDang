@@ -7,11 +7,12 @@
 		<result column="pcode" jdbcType="VARCHAR" property="pcode" />
 		<result column="plevel" jdbcType="INTEGER" property="plevel" />
 		<result column="ptype" jdbcType="INTEGER" property="ptype" />
+		<result column="porder" jdbcType="INTEGER" property="porder" />
+		<result column="pagelink" jdbcType="VARCHAR" property="pagelink" />
 		<result column="state" jdbcType="INTEGER" property="state" />
 		<result column="creater" jdbcType="VARCHAR" property="creater" />
 		<result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
 		<result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
-		<result column="pagelink" jdbcType="VARCHAR" property="pagelink" />
 	</resultMap>
 
 	<select id="getPowerInfoByPrimaryKey" resultType="com.mgs.entity.Power">
@@ -27,27 +28,27 @@
 	</select>
 
 	<select id="queryPowersWithName" resultType="com.mgs.entity.Power">
-		SELECT * FROM Powers WHERE pname like #{name} AND state = 1
+		SELECT * FROM Powers WHERE pname like #{name} AND state = 1 ORDER BY porder
 	</select>
 	
 	<select id="getPowerBycode" resultType="com.mgs.entity.Power">
-		SELECT * FROM Powers WHERE pcode = #{code} AND state = 1
+		SELECT * FROM Powers WHERE pcode = #{code} AND state = 1 ORDER BY porder
 	</select>
 	
 	<select id="queryPowersByLevel" resultType="com.mgs.entity.Power">
-		SELECT * FROM Powers WHERE plevel = #{level} AND state = 1
+		SELECT * FROM Powers WHERE plevel = #{level} AND state = 1 ORDER BY porder
 	</select>
 	
 	<select id="queryPowersByType" resultType="com.mgs.entity.Power">
-		SELECT * FROM Powers WHERE ptype = #{type} AND state = 1
+		SELECT * FROM Powers WHERE ptype = #{type} AND state = 1 ORDER BY porder
 	</select>
 
 	<insert id="addNewPower" parameterType="com.mgs.entity.Power">
 		<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
 			select UUID()
 		</selectKey>
-		INSERT INTO Powers (id, pname, pcode, plevel, ptype, state, creater, ctime, mtime, pagelink) 
-		   VALUES (#{id}, #{pname}, #{pcode}, #{plevel}, #{ptype}, 1, #{creater}, now(), now(), #{pagelink})
+		INSERT INTO Powers (id, pname, pcode, plevel, ptype, porder, pagelink, state, creater, ctime, mtime) 
+		   VALUES (#{id}, #{pname}, #{pcode}, #{plevel}, #{ptype}, #{porder}, #{pagelink}, 1, #{creater}, now(), now())
 	</insert>
 
 	<update id="modifyPowerNameById">

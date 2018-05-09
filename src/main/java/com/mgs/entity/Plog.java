@@ -15,6 +15,8 @@ public class Plog {
 
 	private String latitude;
 
+	private Integer isAttend;
+
 	private Date recordtm;
 
 	public String getId() {
@@ -47,6 +49,14 @@ public class Plog {
 
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
+	}
+
+	public Integer getIsAttend() {
+		return isAttend;
+	}
+
+	public void setIsAttend(Integer isAttend) {
+		this.isAttend = isAttend;
 	}
 
 	public Date getRecordtm() {

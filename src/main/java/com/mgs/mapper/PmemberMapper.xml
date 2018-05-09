@@ -4,9 +4,10 @@
 	<resultMap id="BaseResultMap" type="com.mgs.entity.Pmember">
 		<id column="id" jdbcType="VARCHAR" property="id" />
 		<result column="uname" jdbcType="VARCHAR" property="uname" />
-		<result column="rname" jdbcType="VARCHAR" property="rname" />
 		<result column="pword" jdbcType="VARCHAR" property="pword" />
 		<result column="isParty" jdbcType="INTEGER" property="isParty" />
+		<result column="partyAge" jdbcType="INTEGER" property="partyAge" />
+		<result column="pionts" jdbcType="INTEGER" property="pionts" />
 		<result column="state" jdbcType="INTEGER" property="state" />
 		<result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
 		<result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
@@ -27,17 +28,13 @@
 	<select id="queryMembersByUsername" resultType="com.mgs.entity.Pmember">
 		SELECT * FROM PMembers WHERE uname like #{un} AND state = 1
 	</select>
-
-	<select id="queryMembersByRealname" resultType="com.mgs.entity.Pmember">
-		SELECT * FROM PMembers WHERE rname like #{rn} AND state = 1
-	</select>
 	
 	<insert id="addNewMember" parameterType="com.mgs.entity.Pmember">
 		<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
 			select UUID()
 		</selectKey>
-		INSERT INTO PMembers (id, uname, rname, pword, isParty, state, ctime, mtime)
-		 VALUES (#{id}, #{uname}, #{rname}, #{pword}, #{isParty}, 1, now(), now())
+		INSERT INTO PMembers (id, uname, pword, isParty, partyAge, pionts, state, ctime, mtime)
+		 VALUES (#{id}, #{uname}, #{pword}, #{isParty}, #{partyAge}, #{pionts}, 1, now(), now())
 	</insert>
 
 	<update id="modifyMemberUsername">

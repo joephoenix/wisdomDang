@@ -14,6 +14,10 @@ public class Power {
 
 	private Integer ptype;
 
+	private Integer porder;
+
+	private String pagelink;
+
 	private Integer state;
 
 	private String creater;
@@ -21,8 +25,6 @@ public class Power {
 	private Date ctime;
 
 	private Date mtime;
-
-	private String pagelink;
 
 	public String getId() {
 		return id;
@@ -64,8 +66,24 @@ public class Power {
 		this.ptype = ptype;
 	}
 
+	public Integer getPorder() {
+		return porder;
+	}
+
+	public void setPorder(Integer porder) {
+		this.porder = porder;
+	}
+
 	public Integer getState() {
 		return state;
+	}
+
+	public String getPagelink() {
+		return pagelink;
+	}
+
+	public void setPagelink(String pagelink) {
+		this.pagelink = pagelink;
 	}
 
 	public void setState(Integer state) {
@@ -94,14 +112,6 @@ public class Power {
 
 	public void setMtime(Date mtime) {
 		this.mtime = mtime;
-	}
-
-	public String getPagelink() {
-		return pagelink;
-	}
-
-	public void setPagelink(String pagelink) {
-		this.pagelink = pagelink;
 	}
 
 }

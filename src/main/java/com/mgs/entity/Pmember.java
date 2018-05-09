@@ -8,13 +8,15 @@ public class Pmember {
 
 	private String uname;
 
-	private String rname;
-
 	private String pword;
 
-	private int isParty;
+	private Integer isParty;
 
-	private int state;
+	private Integer partyAge;
+
+	private Integer pionts;
+
+	private Integer state;
 
 	private Date ctime;
 
@@ -36,14 +38,6 @@ public class Pmember {
 		this.uname = uname;
 	}
 
-	public String getRname() {
-		return rname;
-	}
-
-	public void setRname(String rname) {
-		this.rname = rname;
-	}
-
 	public String getPword() {
 		return pword;
 	}
@@ -52,19 +46,35 @@ public class Pmember {
 		this.pword = pword;
 	}
 
-	public int getIsParty() {
+	public Integer getIsParty() {
 		return isParty;
 	}
 
-	public void setIsParty(int isParty) {
+	public void setIsParty(Integer isParty) {
 		this.isParty = isParty;
 	}
 
-	public int getState() {
+	public Integer getPartyAge() {
+		return partyAge;
+	}
+
+	public void setPartyAge(Integer partyAge) {
+		this.partyAge = partyAge;
+	}
+
+	public Integer getPionts() {
+		return pionts;
+	}
+
+	public void setPionts(Integer pionts) {
+		this.pionts = pionts;
+	}
+
+	public Integer getState() {
 		return state;
 	}
 
-	public void setState(int state) {
+	public void setState(Integer state) {
 		this.state = state;
 	}
 

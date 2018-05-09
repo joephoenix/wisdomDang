@@ -34,14 +34,6 @@ public interface PmemberDAO {
 	List<Pmember> queryMembersByUsername(String un);
 
 	/**
-	 * get a list of members by the condation of rname, it's support Fuzzy Lookup
-	 * 
-	 * @param rn
-	 * @return
-	 */
-	List<Pmember> queryMembersByRealname(@Param("rn") String rn);
-
-	/**
 	 * add a new member or registered
 	 * 
 	 * @param pm

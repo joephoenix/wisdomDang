@@ -21,7 +21,7 @@
 	</select>
 	
 	<select id="querySubOrganizes" resultType="com.mgs.entity.Porganize">
-		SELECT * FROM POrganizes WHERE fid = #{fid}
+		SELECT * FROM POrganizes WHERE fid = #{fid} ORDER BY oorder
 	</select>
 	
 	<select id="queryAbandonOrganizes" resultType="com.mgs.entity.Porganize">

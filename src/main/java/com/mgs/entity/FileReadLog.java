@@ -10,13 +10,13 @@ public class FileReadLog {
 
 	private String mid;
 
-	private Integer rst;
+	private Integer ratio;
 
-	private Date stime;
+	private Integer state;
 
-	private Date rtime;
+	private Date starttime;
 
-	private Date ctime;
+	private Date closetime;
 
 	public String getId() {
 		return id;
@@ -42,35 +42,35 @@ public class FileReadLog {
 		this.mid = mid;
 	}
 
-	public Integer getRst() {
-		return rst;
+	public Integer getRatio() {
+		return ratio;
 	}
 
-	public void setRst(Integer rst) {
-		this.rst = rst;
+	public void setRatio(Integer ratio) {
+		this.ratio = ratio;
 	}
 
-	public Date getStime() {
-		return stime;
+	public Integer getState() {
+		return state;
 	}
 
-	public void setStime(Date stime) {
-		this.stime = stime;
+	public void setState(Integer state) {
+		this.state = state;
 	}
 
-	public Date getRtime() {
-		return rtime;
+	public Date getStarttime() {
+		return starttime;
 	}
 
-	public void setRtime(Date rtime) {
-		this.rtime = rtime;
+	public void setStarttime(Date starttime) {
+		this.starttime = starttime;
 	}
 
-	public Date getCtime() {
-		return ctime;
+	public Date getClosetime() {
+		return closetime;
 	}
 
-	public void setCtime(Date ctime) {
-		this.ctime = ctime;
+	public void setClosetime(Date closetime) {
+		this.closetime = closetime;
 	}
 }

@@ -5,10 +5,10 @@
 		<id column="id" jdbcType="VARCHAR" property="id" />
 		<result column="fid" jdbcType="VARCHAR" property="fid" />
 		<result column="mid" jdbcType="VARCHAR" property="mid" />
-		<result column="rst" jdbcType="INTEGER" property="rst" />
-		<result column="stime" jdbcType="TIMESTAMP" property="stime" />
-		<result column="rtime" jdbcType="TIMESTAMP" property="rtime" />
-		<result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+		<result column="ratio" jdbcType="INTEGER" property="ratio" />
+		<result column="state" jdbcType="INTEGER" property="state" />
+		<result column="starttime" jdbcType="TIMESTAMP" property="starttime" />
+		<result column="closetime" jdbcType="TIMESTAMP" property="closetime" />
 	</resultMap>
 
 	<select id="getLogDetailByPrimarykey" resultType="com.mgs.entity.FileReadLog">
@@ -16,31 +16,31 @@
 	</select>
 
 	<select id="queryReadlogByfileId" resultType="com.mgs.entity.FileReadLog">
-		SELECT * FROM FileReadLogs WHERE rst = #{rst} and fid = #{fid}
-	</select>	
+		SELECT * FROM FileReadLogs WHERE state = #{state} and fid = #{fid}
+	</select>
 
 	<select id="queryReadlogByMemberid" resultType="com.mgs.entity.FileReadLog">
-		SELECT * FROM FileReadLogs WHERE rst = #{rst} and mid = #{mid}
+		SELECT * FROM FileReadLogs WHERE state = #{state} and mid = #{mid}
 	</select>
 
 	<insert id="sendSaveFileToMember" parameterType="com.mgs.entity.FileReadLog">
 		<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
 			select UUID()
 		</selectKey>
-		INSERT INTO FileReadLogs (id, fid, mid, rst, stime, rtime, ctime) 
-		   VALUES (#{id}, #{fid}, #{mid}, 1, now(), now(), now())
+		INSERT INTO FileReadLogs (id, fid, mid, ratio, state, starttime, closetime)
+		VALUES (#{id}, #{fid}, #{mid}, 0, 1, now(), now())
 	</insert>
 
 	<update id="readOrOpenSaveFile">
-		UPDATE FileReadLogs SET rst = 2, rtime = now() WHERE id = #{id}
+		UPDATE FileReadLogs SET state = 2, starttime = now() WHERE id = #{id}
 	</update>
 
-	<update id="closeSaveFile">
-		UPDATE FileReadLogs SET rst = 3, ctime = now() WHERE id = #{id}
+	<update id="closeAndSaveFile">
+		UPDATE FileReadLogs SET state = 3, closetime = now() WHERE id = #{id}
 	</update>
-	
-	<update id="trashSaveFile">
-		UPDATE FileReadLogs SET rst = 0 WHERE id = #{id}
+
+	<update id="updateFilereadRatio">
+		UPDATE FileReadLogs SET ratio = #{ratio} WHERE id = #{id}
 	</update>
 
 </mapper>

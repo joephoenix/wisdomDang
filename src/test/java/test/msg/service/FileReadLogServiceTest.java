@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mgs.entity.FileReadLog;
 import com.mgs.entity.Pmember;
-import com.mgs.entity.Sfile;
+import com.mgs.entity.ResourceFile;
 import com.mgs.service.FileReadLogService;
 import com.mgs.service.PmemberService;
-import com.mgs.service.SfileService;
+import com.mgs.service.ResourceFileService;
 import test.msg.BaseUnitTest;
 
 public class FileReadLogServiceTest extends BaseUnitTest {
@@ -21,7 +21,7 @@ public class FileReadLogServiceTest extends BaseUnitTest {
 	private FileReadLogService fileReadLogService;
 
 	@Autowired
-	private SfileService sfileService;
+	private ResourceFileService sfileService;
 
 	@Autowired
 	private PmemberService pmemberService;
@@ -30,13 +30,13 @@ public class FileReadLogServiceTest extends BaseUnitTest {
 	@Ignore
 	public void testFileReadMethod() {
 		// find the file list
-		List<Sfile> filelist = sfileService.querySavefileList();
+		List<ResourceFile> filelist = sfileService.querySavefileList();
 		boolean iscontinue = false;
 		List<String> frlids = new ArrayList<String>();
 		if (null == filelist) {
 			System.out.println("There are no files!");
 		} else {
-			for (Sfile sf : filelist) {
+			for (ResourceFile sf : filelist) {
 				String fid = sf.getId();
 				List<Pmember> memberlist = pmemberService.queryMembersByCondition("");
 				if (null == filelist) {
@@ -81,7 +81,7 @@ public class FileReadLogServiceTest extends BaseUnitTest {
 			for (FileReadLog frl : listfs) {
 				String fname = sfileService.getSaveFileInformation(frl.getFid()).getFname();
 				String mname = pmemberService.getMemberInformation(frl.getMid()).getUname();
-				Integer s = frl.getRst();
+				Integer s = frl.getState();
 				System.out.println(
 						"the log detail is file that named " + fname + " send to member " + mname + " state is " + s);
 			}

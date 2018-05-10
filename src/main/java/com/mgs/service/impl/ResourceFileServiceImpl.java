@@ -6,21 +6,21 @@ import javax.annotation.Resource;
 
 import org.csource.common.NameValuePair;
 import org.springframework.stereotype.Service;
-import com.mgs.dao.SfileDAO;
-import com.mgs.entity.Sfile;
+import com.mgs.dao.ResourceFileDAO;
+import com.mgs.entity.ResourceFile;
 import com.mgs.fastdfs.FastDFSFile;
 import com.mgs.fastdfs.FileManager;
-import com.mgs.service.SfileService;
+import com.mgs.service.ResourceFileService;
 
 @Service
-public class SfileServiceImpl implements SfileService {
+public class ResourceFileServiceImpl implements ResourceFileService {
 
 	@Resource
-	private SfileDAO sfileDAO;
+	private ResourceFileDAO resourceFileDAO;
 
 	@Override
-	public String generateSavefileRecord(Sfile file) {
-		int rlt = sfileDAO.addNewSavefileRecord(file);
+	public String generateSavefileRecord(ResourceFile file) {
+		int rlt = resourceFileDAO.addNewSavefileRecord(file);
 		if (rlt > 0) {
 			return file.getId();
 		} else {
@@ -29,28 +29,28 @@ public class SfileServiceImpl implements SfileService {
 	}
 
 	@Override
-	public Sfile getSaveFileInformation(String id) {
-		return sfileDAO.getFileInfoByPrimarykey(id);
+	public ResourceFile getSaveFileInformation(String id) {
+		return resourceFileDAO.getFileInfoByPrimarykey(id);
 	}
 
 	@Override
-	public List<Sfile> querySavefileList() {
-		return sfileDAO.queryEntireSaveFiles();
+	public List<ResourceFile> querySavefileList() {
+		return resourceFileDAO.queryEntireSaveFiles();
 	}
 
 	@Override
-	public List<Sfile> searchChooseName(String name) {
-		return sfileDAO.queryFilesWithNane(name);
+	public List<ResourceFile> searchChooseName(String name) {
+		return resourceFileDAO.queryFilesWithNane(name);
 	}
 
 	@Override
-	public List<Sfile> filterSavefileByExtname(String ext) {
-		return sfileDAO.queryFileByExtname(ext);
+	public List<ResourceFile> filterSavefileByExtname(String ext) {
+		return resourceFileDAO.queryFileByExtname(ext);
 	}
 
 	@Override
 	public int removeChooseSavefile(String id) {
-		return sfileDAO.removeSavefileRecord(id);
+		return resourceFileDAO.removeSavefileRecord(id);
 	}
 
 	/**
@@ -65,13 +65,13 @@ public class SfileServiceImpl implements SfileService {
 		meta_list[3] = new NameValuePair("fileAuthor", fdf.getAuthor());
 		// upload
 		String filePath = FileManager.upload(fdf.getContent(), fdf.getExt(), meta_list);
-		Sfile insertInfo = new Sfile();
+		ResourceFile insertInfo = new ResourceFile();
 		insertInfo.setFname(fdf.getName());
 		insertInfo.setFext(fdf.getExt());
 		insertInfo.setFpath(filePath);
 		insertInfo.setCreater(fdf.getAuthor());
 		insertInfo.setFlength(fdf.getLength());
-		int rlt = sfileDAO.addNewSavefileRecord(insertInfo);
+		int rlt = resourceFileDAO.addNewSavefileRecord(insertInfo);
 		if (rlt > 0) {
 			return insertInfo.getId();
 		} else {

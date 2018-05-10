@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mgs.dao.MessageRecordDAO">
+	<resultMap id="BaseResultMap" type="com.mgs.entity.MessageRecord">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="mid" jdbcType="VARCHAR" property="mid" />
+		<result column="rsid" jdbcType="VARCHAR" property="rsid" />
+		<result column="state" jdbcType="INTEGER" property="state" />
+		<result column="rdtime" jdbcType="TIMESTAMP" property="rdtime" />
+	</resultMap>
+
+	<select id="getDetail4mr" resultType="com.mgs.entity.MessageRecord">
+		SELECT * FROM MessageRecord WHERE id = #{id}
+	</select>
+
+	<select id="queryMessage4member" resultType="com.mgs.entity.MessageRecord">
+		SELECT * FROM MessageRecord WHERE mid = #{mid}
+	</select>
+	
+	<select id="queryMessageForward" resultType="com.mgs.entity.MessageRecord">
+		SELECT * FROM MessageRecord WHERE rsid = #{rsid}
+	</select>
+	
+	<select id="queryMessage4memberReaded" resultType="com.mgs.entity.MessageRecord">
+		SELECT * FROM MessageRecord WHERE mid = #{mid} and state = 2
+	</select>
+	
+	<insert id="generateMessageRecord" parameterType="com.mgs.entity.PointRecord">
+		<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+			select UUID()
+		</selectKey>
+		INSERT INTO MessageRecord (id, mid, rsid, state, rdtime) VALUES (#{id}, #{mid}, #{rsid}, 1, now())
+	</insert>
+	
+	<update id="adjustMessage2Unread">
+		UPDATE MessageRecord SET state = 1 WHERE id = #{id}
+	</update>
+	
+	<update id="adjustMessage2Read">
+		UPDATE MessageRecord SET state = 2 WHERE id = #{id}
+	</update>
+	
+	<update id="adjustMessage2Trash">
+		UPDATE MessageRecord SET state = 4 WHERE id = #{id}
+	</update>
+	
+	<update id="moveChooseMessage">
+		UPDATE MessageRecord SET state = 0 WHERE id = #{id}
+	</update>
+		
+</mapper>

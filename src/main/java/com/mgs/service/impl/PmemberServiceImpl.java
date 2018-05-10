@@ -1,5 +1,6 @@
 package com.mgs.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -9,8 +10,10 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.mgs.dao.MemberInfoDAO;
 import com.mgs.dao.PlogDAO;
 import com.mgs.dao.PmemberDAO;
+import com.mgs.entity.MemberInfo;
 import com.mgs.entity.Plog;
 import com.mgs.entity.Pmember;
 import com.mgs.service.PmemberService;
@@ -23,6 +26,9 @@ public class PmemberServiceImpl implements PmemberService {
 
 	@Resource
 	private PlogDAO plogDAO;
+
+	@Resource
+	private MemberInfoDAO memberInfoDAO;
 
 	@Override
 	public List<Pmember> queryMembersByCondition(String condition) {
@@ -79,6 +85,19 @@ public class PmemberServiceImpl implements PmemberService {
 			} else {
 				return memID;
 			}
+		}
+	}
+
+	@Override
+	public MemberInfo getMemberDetailBymid(String mid) {
+		List<MemberInfo> rlt = new ArrayList<MemberInfo>();
+		rlt = memberInfoDAO.querMemberDetailBymid(mid);
+		if (null == rlt || 0 == rlt.size()) {
+			return null;
+		} else if (1 < rlt.size()) {
+			return null;
+		} else {
+			return rlt.get(0);
 		}
 	}
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.mgs.entity.MemberInfo;
 import com.mgs.entity.Plog;
 import com.mgs.entity.Pmember;
 import com.mgs.entity.Porganize;
@@ -191,14 +192,15 @@ public class MemberController {
 
 						} else {
 							for (RelationMO rmo : lstRMO2) {
-								Pmember subMember = pmemberService.getMemberInformation(rmo.getMid());
-								Plog lg = plogService.getLastLog4ChooseMember(rmo.getMid());
+								String mid = rmo.getMid();
+								Plog lg = plogService.getLastLog4ChooseMember(mid);
+								MemberInfo mi = pmemberService.getMemberDetailBymid(mid);
 								MemberView mv = new MemberView();
 								mv.setLatitude(lg.getLatitude());
 								mv.setLongtude(lg.getLongitude());
 								mv.setMid(rmo.getId());
 								mv.setRecordtm(lg.getRecordtm());
-								mv.setRname(subMember.getRname());
+								mv.setRname(mi.getName());
 								mvlst.add(mv);
 							}
 						}

@@ -7,6 +7,8 @@ public interface MemberInfoDAO {
 
 	MemberInfo getMemberDetailByid(String id);
 
+	List<MemberInfo> querMemberDetailBymid(String mid);
+
 	List<MemberInfo> queryMembersByage(Integer age);
 
 	List<MemberInfo> queryMembersBysex(Integer sex);

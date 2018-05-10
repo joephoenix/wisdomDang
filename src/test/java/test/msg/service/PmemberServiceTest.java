@@ -20,7 +20,6 @@ public class PmemberServiceTest extends BaseUnitTest {
 	public void testAddNewMember() {
 		Pmember npm = new Pmember();
 		npm.setUname("Admin");
-		npm.setRname("管理员");
 		npm.setIsParty(0);
 		npm.setPword("123456");
 		String mid = pmemberService.addNewMember(npm);
@@ -29,7 +28,7 @@ public class PmemberServiceTest extends BaseUnitTest {
 		if (null == extpm) {
 			System.out.println("the member generate failed");
 		} else {
-			System.out.println("the member realname is " + extpm.getRname() + " and username " + extpm.getUname());
+			System.out.println("the member realname is " + " and username " + extpm.getUname());
 		}
 
 	}
@@ -44,15 +43,15 @@ public class PmemberServiceTest extends BaseUnitTest {
 				if (pm.getIsParty() == 0) {
 					dang = "qun zhong";
 				}
-				System.out.println(pm.getRname() + " is " + dang);
+				System.out.println(pm.getUname() + " is " + dang);
 			}
 		} else {
 			System.out.println("there are no data!");
 		}
 	}
-	
+
 	@Test
 	public void showMenus() {
-		
+
 	}
 }

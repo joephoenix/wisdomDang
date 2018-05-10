@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mgs.dao.PResourceDAO">
+	<resultMap id="BaseResultMap" type="com.mgs.entity.PResource">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="fileName" jdbcType="VARCHAR" property="fileName" />
+		<result column="fileDescript" jdbcType="VARCHAR" property="fileDescript" />
+		<result column="fileContext" jdbcType="VARCHAR" property="fileContext" />
+		<result column="fileType" jdbcType="INTEGER" property="fileType" />
+		<result column="taskPoint" jdbcType="VARCHAR" property="taskPoint" />
+		<result column="timeLength" jdbcType="INTEGER" property="timeLength" />
+		<result column="state" jdbcType="INTEGER" property="state" />
+		<result column="creater" jdbcType="VARCHAR" property="creater" />
+		<result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+	</resultMap>
+
+	<select id="getResourceDetailByid" resultType="com.mgs.entity.PResource">
+		SELECT * FROM PResource WHERE id = #{id}
+	</select>
+
+	<select id="queryResourceByName" resultType="com.mgs.entity.PResource">
+		SELECT * FROM PResource WHERE state = 1 and fileName like #{name}
+	</select>
+	
+	<select id="queryResourceByType" resultType="com.mgs.entity.PResource">
+		SELECT * FROM PResource WHERE state = 1 and fileType = #{fileTye}
+	</select>
+	
+	<select id="queryEntireResource" resultType="com.mgs.entity.PResource">
+		SELECT * FROM PResource WHERE state = 1
+	</select>
+	
+	<select id="queryAbandonResource" resultType="com.mgs.entity.PResource">
+		SELECT * FROM PResource WHERE state = 0
+	</select>
+	
+	<insert id="generateNewResource" parameterType="com.mgs.entity.PResource">
+		<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+			select UUID()
+		</selectKey>
+		INSERT INTO PResource (id, fileName, fileDescript, fileContext, fileType, taskPoint, timeLength, state, creater, ctime)
+		  VALUES (#{id}, #{fileName}, #{fileDescript}, #{fileContext}, #{fileType}, #{taskPoint}, #{timeLength}, 1, #{creater}, now())
+	</insert>
+	
+	<update id="adjustResourceParameters" parameterType="com.mgs.entity.PResource">
+		UPDATE PResource SET 
+		fileName = #{fileName}, fileDescript = #{fileDescript}
+		fileContext = #{fileContext},fileType = #{fileType},
+		timeLength = #{timeLength}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="removeChooseResource">
+		UPDATE PResource SET state  = 0  WHERE id = #{id}
+	</update>
+	
+	<update id="reviseChooseResource">
+		UPDATE PResource SET state  = 1  WHERE id = #{id}
+	</update>
+		
+</mapper>

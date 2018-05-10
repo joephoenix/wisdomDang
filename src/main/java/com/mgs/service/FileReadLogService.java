@@ -22,7 +22,6 @@ public interface FileReadLogService {
 
 	int closeSavefile(String id);
 
-	int trashSavefile(String id);
 
 	/**
 	 * view the read log list for file that chose with id;

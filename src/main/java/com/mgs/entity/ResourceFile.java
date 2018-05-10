@@ -2,24 +2,31 @@ package com.mgs.entity;
 
 import java.util.Date;
 
-public class Sfile {
-	
+public class ResourceFile {
+
 	private String id;
-	
+
+	private String mainid;
+
+	/**
+	 * 类型描述：1是辅助图片，2是正文图片，3是视频，4是音频
+	 */
+	private Integer ftype;
+
 	private String fname;
-	
+
 	private String fext;
-	
+
 	private String fpath;
-	
+
 	private String flength;
-	
+
 	private Integer state;
-	
+
 	private String creater;
-	
+
 	private Date ctime;
-	
+
 	private Date mtime;
 
 	public String getId() {
@@ -28,6 +35,22 @@ public class Sfile {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getMainid() {
+		return mainid;
+	}
+
+	public void setMainid(String mainid) {
+		this.mainid = mainid;
+	}
+
+	public Integer getFtype() {
+		return ftype;
+	}
+
+	public void setFtype(Integer ftype) {
+		this.ftype = ftype;
 	}
 
 	public String getFname() {

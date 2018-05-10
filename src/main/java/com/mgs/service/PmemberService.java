@@ -3,6 +3,7 @@ package com.mgs.service;
 import java.util.List;
 import java.util.Map;
 
+import com.mgs.entity.MemberInfo;
 import com.mgs.entity.Pmember;
 
 public interface PmemberService {
@@ -22,4 +23,6 @@ public interface PmemberService {
 	public Map<String, Object> checkUserState(String username);
 
 	public String isLoginState(Pmember pmb);
+
+	public MemberInfo getMemberDetailBymid(String mid);
 }

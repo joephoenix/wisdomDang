@@ -20,6 +20,10 @@
 	<select id="getMemberDetailByid" resultType="com.mgs.entity.MemberInfo">
 		SELECT * FROM MemberInfo WHERE id = #{id}
 	</select>
+	
+	<select id="querMemberDetailBymid" resultType="com.mgs.entity.MemberInfo">
+		SELECT * FROM MemberInfo WHERE state = 1 and mid = #{mid}
+	</select>
 
 	<select id="queryMembersByage" resultType="com.mgs.entity.MemberInfo">
 		SELECT * FROM MemberInfo WHERE state = 1 and age = #{age}

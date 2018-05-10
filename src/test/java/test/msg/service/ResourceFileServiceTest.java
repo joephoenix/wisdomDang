@@ -9,16 +9,16 @@ import java.io.IOException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.mgs.entity.Sfile;
+import com.mgs.entity.ResourceFile;
 import com.mgs.fastdfs.FastDFSFile;
-import com.mgs.service.SfileService;
+import com.mgs.service.ResourceFileService;
 
 import test.msg.BaseUnitTest;
 
-public class SfileServiceTest extends BaseUnitTest {
+public class ResourceFileServiceTest extends BaseUnitTest {
 
 	@Autowired
-	private SfileService sfileService;
+	private ResourceFileService sfileService;
 
 	/***
 	 * test save file to fastdfs server
@@ -66,7 +66,7 @@ public class SfileServiceTest extends BaseUnitTest {
 		if (null == sid) {
 			System.out.println("file save id is null, so save failed");
 		} else {
-			Sfile rlt = sfileService.getSaveFileInformation(sid);
+			ResourceFile rlt = sfileService.getSaveFileInformation(sid);
 			if (null == rlt) {
 				System.out.println("can't find the choose file");
 			} else {

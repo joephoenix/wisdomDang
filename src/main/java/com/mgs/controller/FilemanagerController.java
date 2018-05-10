@@ -14,10 +14,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mgs.entity.Pmember;
-import com.mgs.entity.Sfile;
+import com.mgs.entity.ResourceFile;
 import com.mgs.fastdfs.FastDFSFile;
 import com.mgs.service.PmemberService;
-import com.mgs.service.SfileService;
+import com.mgs.service.ResourceFileService;
 import com.mgs.view.FileInfo;
 import com.mgs.view.Rqbody;
 
@@ -25,7 +25,7 @@ import com.mgs.view.Rqbody;
 public class FilemanagerController {
 
 	@Autowired
-	private SfileService sfileService;
+	private ResourceFileService resourceFileService;
 
 	@Autowired
 	private PmemberService pmemberService;
@@ -55,8 +55,8 @@ public class FilemanagerController {
 				return jsonObject;
 			} else {
 				List<FileInfo> rlst = new ArrayList<FileInfo>();
-				List<Sfile> slist = sfileService.querySavefileList();
-				for (Sfile sf : slist) {
+				List<ResourceFile> slist = resourceFileService.querySavefileList();
+				for (ResourceFile sf : slist) {
 					FileInfo fi = new FileInfo();
 					fi.setFileName(sf.getFname());
 					fi.setFilePath(sf.getFpath());
@@ -97,7 +97,7 @@ public class FilemanagerController {
 				return jsonObject;
 			} else {
 				FileInfo fi = new FileInfo();
-				Sfile sf = sfileService.getSaveFileInformation(fileId);
+				ResourceFile sf = resourceFileService.getSaveFileInformation(fileId);
 				fi.setFileName(sf.getFname());
 				fi.setFilePath(sf.getFpath());
 				fi.setFlieid(sf.getId());
@@ -143,8 +143,8 @@ public class FilemanagerController {
 				ff.setExt(ext);
 				ff.setLength(String.valueOf(attach.getSize()));
 				ff.setAuthor(username);
-				String sid = sfileService.uploadChooseFileToFastdfs(ff);
-				Sfile sf = sfileService.getSaveFileInformation(sid);
+				String sid = resourceFileService.uploadChooseFileToFastdfs(ff);
+				ResourceFile sf = resourceFileService.getSaveFileInformation(sid);
 				jsonObject.put("result", sf.getFpath());
 				jsonObject.put("message", "uploadLocationFile");
 				jsonObject.put("status", "success");

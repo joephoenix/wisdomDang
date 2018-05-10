@@ -59,12 +59,7 @@ public class FileReadLogServiceImpl implements FileReadLogService {
 
 	@Override
 	public int closeSavefile(String id) {
-		return fileReadLogDAO.closeSaveFile(id);
-	}
-
-	@Override
-	public int trashSavefile(String id) {
-		return fileReadLogDAO.trashSaveFile(id);
+		return fileReadLogDAO.closeAndSaveFile(id);
 	}
 
 	@Override

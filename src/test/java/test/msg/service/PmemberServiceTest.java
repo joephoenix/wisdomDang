@@ -20,7 +20,7 @@ public class PmemberServiceTest extends BaseUnitTest {
 	public void testAddNewMember() {
 		Pmember npm = new Pmember();
 		npm.setUname("Admin");
-		npm.setIsParty(0);
+		npm.setPartyType(9);
 		npm.setPword("123456");
 		String mid = pmemberService.addNewMember(npm);
 		// get new member
@@ -40,7 +40,7 @@ public class PmemberServiceTest extends BaseUnitTest {
 		if (ms.size() > 0) {
 			for (Pmember pm : ms) {
 				String dang = "dang yuan";
-				if (pm.getIsParty() == 0) {
+				if (pm.getPartyType() == 0) {
 					dang = "qun zhong";
 				}
 				System.out.println(pm.getUname() + " is " + dang);

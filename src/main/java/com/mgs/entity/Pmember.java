@@ -10,7 +10,7 @@ public class Pmember {
 
 	private String pword;
 
-	private Integer isParty;
+	private Integer partyType;
 
 	private Integer partyAge;
 
@@ -46,12 +46,12 @@ public class Pmember {
 		this.pword = pword;
 	}
 
-	public Integer getIsParty() {
-		return isParty;
+	public Integer getPartyType() {
+		return partyType;
 	}
 
-	public void setIsParty(Integer isParty) {
-		this.isParty = isParty;
+	public void setPartyType(Integer partyType) {
+		this.partyType = partyType;
 	}
 
 	public Integer getPartyAge() {

@@ -17,8 +17,8 @@ public class MemberDaoTest extends BaseUnitTest {
 		Pmember pm = new Pmember();
 		pm.setUname("kelaien");
 		pm.setPword("123456");
-		pm.setIsParty(1);    //如果输入1表示是党员，则需要输入党龄，不是党员，则党龄为0
-		pm.setPartyAge(6);
+		pm.setPartyType(3);    //如果输入3表示是党员，则需要输入党龄，不是党员，则党龄为0
+		pm.setPartyAge(9);
 		pm.setPionts(0);   //分数初始化为0
 		int rls = pmemberDAO.addNewMember(pm);
 		System.out.println("add " + rls + " record successfully!");

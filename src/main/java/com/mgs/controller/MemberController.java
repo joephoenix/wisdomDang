@@ -2,7 +2,6 @@ package com.mgs.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,44 +54,43 @@ public class MemberController {
 			jsonObject.put("status", "error");
 			return jsonObject;
 		}
-		// get the member state
-		Pmember mem = new Pmember();
-		Map<String, Object> memst = pmemberService.checkUserState(username);
-		if (!memst.get("code").equals("OK")) {
-			jsonObject.put("message", memst.get("code"));
-			jsonObject.put("status", "error");
+		jsonObject = pmemberService.judgeLoginState(username);
+		if (jsonObject.get("status") == "success") {
+			String membid = jsonObject.getString("result");
+			Plog loginLog = new Plog();
+			loginLog.setLongitude("120.203081");
+			loginLog.setLatitude("30.600326");
+			loginLog.setMid(membid);
+			loginLog.setIsAttend(0);
+			plogService.addLogForMember(loginLog);
+			jsonObject.put("message", "Login");
+			jsonObject.put("status", "success");
 			return jsonObject;
 		} else {
-			mem = (Pmember) memst.get("member");
-			String memID = pmemberService.isLoginState(mem);
-			if (null == memID || "NotLogin" == memID) {
-				String cpwd = mem.getPword();
-				if (!cpwd.equals(password)) {
+			if (jsonObject.get("message") == "ReLogin") {
+				String membid = jsonObject.getString("result");
+				String passwd = jsonObject.getString("passwd");
+				if (!passwd.equals(password)) {
 					jsonObject.put("message", "ParametersError");
 					jsonObject.put("status", "error");
 					return jsonObject;
 				} else {
 					// record login log
 					Plog loginLog = new Plog();
-					loginLog.setLatitude(latitude);
-					loginLog.setLongitude(longtude);
-					loginLog.setMid(mem.getId());
+					loginLog.setLongitude("120.203081");
+					loginLog.setLatitude("30.600326");
+					loginLog.setMid(membid);
+					loginLog.setIsAttend(0);
 					plogService.addLogForMember(loginLog);
-					jsonObject.put("message", "attend");
+					jsonObject.put("message", "Attend");
 					jsonObject.put("status", "success");
 					return jsonObject;
 				}
 			} else {
-				Plog loginLog = new Plog();
-				loginLog.setLongitude(longtude);
-				loginLog.setLatitude(latitude);
-				loginLog.setMid(memID);
-				plogService.addLogForMember(loginLog);
-				jsonObject.put("message", "Login");
-				jsonObject.put("status", "success");
 				return jsonObject;
 			}
 		}
+
 	}
 
 	@RequestMapping(value = "/normalLogin", method = RequestMethod.POST, consumes = "application/json")
@@ -106,18 +104,23 @@ public class MemberController {
 			jsonObject.put("status", "error");
 			return jsonObject;
 		}
-		Pmember mem = new Pmember();
-		Map<String, Object> memst = pmemberService.checkUserState(username);
-		if (!memst.get("code").equals("OK")) {
-			jsonObject.put("message", memst.get("code"));
-			jsonObject.put("status", "error");
+		jsonObject = pmemberService.judgeLoginState(username);
+		if (jsonObject.get("status") == "success") {
+			String membid = jsonObject.getString("result");
+			Plog loginLog = new Plog();
+			loginLog.setLongitude("120.203081");
+			loginLog.setLatitude("30.600326");
+			loginLog.setMid(membid);
+			loginLog.setIsAttend(0);
+			plogService.addLogForMember(loginLog);
+			jsonObject.put("message", "Login");
+			jsonObject.put("status", "success");
 			return jsonObject;
 		} else {
-			mem = (Pmember) memst.get("member");
-			String memID = pmemberService.isLoginState(mem);
-			if (null == memID || "NotLogin" == memID) {
-				String cpwd = mem.getPword();
-				if (!cpwd.equals(password)) {
+			if (jsonObject.get("message") == "ReLogin") {
+				String membid = jsonObject.getString("result");
+				String passwd = jsonObject.getString("passwd");
+				if (!passwd.equals(password)) {
 					jsonObject.put("message", "ParametersError");
 					jsonObject.put("status", "error");
 					return jsonObject;
@@ -126,24 +129,17 @@ public class MemberController {
 					Plog loginLog = new Plog();
 					loginLog.setLongitude("120.203081");
 					loginLog.setLatitude("30.600326");
-					loginLog.setMid(mem.getId());
+					loginLog.setMid(membid);
+					loginLog.setIsAttend(0);
 					plogService.addLogForMember(loginLog);
 					jsonObject.put("message", "Attend");
 					jsonObject.put("status", "success");
 					return jsonObject;
 				}
 			} else {
-				Plog loginLog = new Plog();
-				loginLog.setLongitude("120.203081");
-				loginLog.setLatitude("30.600326");
-				loginLog.setMid(memID);
-				plogService.addLogForMember(loginLog);
-				jsonObject.put("message", "Login");
-				jsonObject.put("status", "success");
 				return jsonObject;
 			}
 		}
-
 	}
 
 	@RequestMapping(value = "/memberList", method = RequestMethod.POST, consumes = "application/json")
@@ -151,27 +147,10 @@ public class MemberController {
 	public JSONObject showMemberList(@RequestBody Rqbody body) {
 		JSONObject jsonObject = new JSONObject();
 		String username = body.getUsername();
-		if (null == username) {
-			jsonObject.put("message", "ParametersError");
-			jsonObject.put("status", "error");
-			return jsonObject;
-		}
-		Pmember pm = new Pmember();
-		Map<String, Object> memst = pmemberService.checkUserState(username);
-		if (memst.get("code").equals("OK")) {
-			pm = (Pmember) memst.get("member");
-		} else {
-			jsonObject.put("message", memst.get("code"));
-			jsonObject.put("status", "error");
-			return jsonObject;
-		}
-		String memID = pmemberService.isLoginState(pm);
-		if ("NotLogin" == memID) {
-			jsonObject.put("message", memID);
-			jsonObject.put("status", "error");
-			return jsonObject;
-		} else {
-			List<RelationMO> lstRMO1 = relationService.findReltionsByMember(memID);
+		jsonObject = pmemberService.judgeLoginState(username);
+		if (jsonObject.get("status") == "success") {
+			String membid = jsonObject.getString("result");
+			List<RelationMO> lstRMO1 = relationService.findReltionsByMember(membid);
 			if (null == lstRMO1 || 0 == lstRMO1.size()) {
 				jsonObject.put("message", "SomeErrorAppeared");
 				jsonObject.put("status", "error");
@@ -212,6 +191,8 @@ public class MemberController {
 					return jsonObject;
 				}
 			}
+		} else {
+			return jsonObject;
 		}
 
 	}
@@ -222,31 +203,15 @@ public class MemberController {
 		JSONObject jsonObject = new JSONObject();
 		String username = body.getUsername();
 		String memid = body.getMemid();
-		if (null == username) {
-			jsonObject.put("message", "ParametersError");
-			jsonObject.put("status", "error");
-			return jsonObject;
-		}
-		Pmember mem = new Pmember();
-		Map<String, Object> memst = pmemberService.checkUserState(username);
-		if (!memst.get("code").equals("OK")) {
-			jsonObject.put("message", memst.get("code"));
-			jsonObject.put("status", "error");
+		jsonObject = pmemberService.judgeLoginState(username);
+		if (jsonObject.get("status") == "success") {
+			List<Plog> mLoglist = plogService.queryLogsByMember(memid);
+			jsonObject.put("logs", mLoglist);
+			jsonObject.put("message", "getMemberLogs");
+			jsonObject.put("status", "success");
 			return jsonObject;
 		} else {
-			mem = (Pmember) memst.get("member");
-			String memID = pmemberService.isLoginState(mem);
-			if (null == memID || "NotLogin" == memID) {
-				jsonObject.put("message", "PermissionBanished");
-				jsonObject.put("status", "error");
-				return jsonObject;
-			} else {
-				List<Plog> mLoglist = plogService.queryLogsByMember(memid);
-				jsonObject.put("logs", mLoglist);
-				jsonObject.put("message", "getMemberLogs");
-				jsonObject.put("status", "success");
-				return jsonObject;
-			}
+			return jsonObject;
 		}
 	}
 
@@ -255,31 +220,16 @@ public class MemberController {
 	public JSONObject getMemberInfo(@RequestBody Rqbody body) {
 		JSONObject jsonObject = new JSONObject();
 		String username = body.getUsername();
-		if (null == username) {
-			jsonObject.put("message", "ParametersError");
-			jsonObject.put("status", "error");
-			return jsonObject;
-		}
-		Pmember mem = new Pmember();
-		Map<String, Object> memst = pmemberService.checkUserState(username);
-		if (!memst.get("code").equals("OK")) {
-			jsonObject.put("message", memst.get("code"));
-			jsonObject.put("status", "error");
+		jsonObject = pmemberService.judgeLoginState(username);
+		if (jsonObject.get("status") == "success") {
+			String membid = jsonObject.getString("result");
+			Pmember rpm = pmemberService.getMemberInformation(membid);
+			jsonObject.put("memInfo", rpm);
+			jsonObject.put("message", "get memeber information");
+			jsonObject.put("status", "success");
 			return jsonObject;
 		} else {
-			mem = (Pmember) memst.get("member");
-			String memID = pmemberService.isLoginState(mem);
-			if (null == memID || "NotLogin" == memID) {
-				jsonObject.put("message", "PermissionBanished");
-				jsonObject.put("status", "error");
-				return jsonObject;
-			} else {
-				Pmember rpm = pmemberService.getMemberInformation(memID);
-				jsonObject.put("memInfo", rpm);
-				jsonObject.put("message", "get memeber information");
-				jsonObject.put("status", "success");
-				return jsonObject;
-			}
+			return jsonObject;
 		}
 	}
 
@@ -288,31 +238,36 @@ public class MemberController {
 	public JSONObject showMenus(@RequestBody Rqbody body) {
 		JSONObject jsonObject = new JSONObject();
 		String username = body.getUsername();
-		if (null == username) {
-			jsonObject.put("message", "ParametersError");
-			jsonObject.put("status", "error");
+		jsonObject = pmemberService.judgeLoginState(username);
+		if (jsonObject.get("status") == "success") {
+			String membid = jsonObject.getString("result");
+			List<Power> rplist = relationService.lstMenuByMemberId(membid);
+			jsonObject.put("menus", rplist);
+			jsonObject.put("message", "getMenus");
+			jsonObject.put("status", "success");
+			return jsonObject;
+
+		} else {
 			return jsonObject;
 		}
-		Pmember mem = new Pmember();
-		Map<String, Object> memst = pmemberService.checkUserState(username);
-		if (!memst.get("code").equals("OK")) {
-			jsonObject.put("message", memst.get("code"));
-			jsonObject.put("status", "error");
+	}
+
+	@RequestMapping(value = "/showMemberDetail", method = RequestMethod.POST, consumes = "application/json")
+	@ResponseBody
+	public JSONObject showMemberDetail(@RequestBody Rqbody body) {
+		JSONObject jsonObject = new JSONObject();
+		String username = body.getUsername();
+		jsonObject = pmemberService.judgeLoginState(username);
+		if (jsonObject.get("status") == "success") {
+			String membid = jsonObject.getString("result");
+			MemberInfo mi = pmemberService.getMemberDetailBymid(membid);
+			jsonObject.put("memberDetail", mi);
+			jsonObject.put("message", "getInformation");
+			jsonObject.put("status", "success");
 			return jsonObject;
+
 		} else {
-			mem = (Pmember) memst.get("member");
-			String memID = pmemberService.isLoginState(mem);
-			if (null == memID || "NotLogin" == memID) {
-				jsonObject.put("message", "PermissionBanished");
-				jsonObject.put("status", "error");
-				return jsonObject;
-			} else {
-				List<Power> rplist = relationService.lstMenuByMemberId(memID);
-				jsonObject.put("menus", rplist);
-				jsonObject.put("message", "getMenus");
-				jsonObject.put("status", "success");
-				return jsonObject;
-			}
+			return jsonObject;
 		}
 	}
 }

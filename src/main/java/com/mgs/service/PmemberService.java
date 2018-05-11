@@ -3,6 +3,7 @@ package com.mgs.service;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONObject;
 import com.mgs.entity.MemberInfo;
 import com.mgs.entity.Pmember;
 
@@ -22,7 +23,7 @@ public interface PmemberService {
 
 	public Map<String, Object> checkUserState(String username);
 
-	public String isLoginState(Pmember pmb);
+	public JSONObject judgeLoginState(String username);
 
 	public MemberInfo getMemberDetailBymid(String mid);
 }

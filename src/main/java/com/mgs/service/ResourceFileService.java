@@ -20,5 +20,7 @@ public interface ResourceFileService {
 	int removeChooseSavefile(String id);
 
 	String uploadChooseFileToFastdfs(FastDFSFile ff) throws Exception;
+	
+	List<ResourceFile> findNotice4Member(String mid);
 
 }

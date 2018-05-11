@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.mgs.dao.MemberInfoDAO;
 import com.mgs.dao.PlogDAO;
 import com.mgs.dao.PmemberDAO;
@@ -72,20 +73,44 @@ public class PmemberServiceImpl implements PmemberService {
 	}
 
 	@Override
-	public String isLoginState(Pmember pmb) {
-		String memID = pmb.getId();
-		Plog lastLog = plogDAO.getLastLogOfMember(memID);
-		if (null == lastLog) {
-			return "NotLogin";
+	public JSONObject judgeLoginState(String username) {
+		JSONObject jsonObject = new JSONObject();
+		if (null == username) {
+			jsonObject.put("message", "ParametersError");
+			jsonObject.put("status", "error");
+			return jsonObject;
+		}
+		Pmember mem = new Pmember();
+		Map<String, Object> memst = checkUserState(username);
+		if (!memst.get("code").equals("OK")) {
+			jsonObject.put("message", memst.get("code"));
+			jsonObject.put("status", "error");
+			return jsonObject;
 		} else {
-			Date now = new Date();
-			int seconds = (int) ((now.getTime() - lastLog.getRecordtm().getTime()) / 1000 / 60);
-			if (seconds > 30) {
-				return "NotLogin";
+			mem = (Pmember) memst.get("member");
+			Plog lastLog = plogDAO.getLastLogOfMember(mem.getId());
+			if (null == lastLog) {
+				jsonObject.put("message", "PermissionBanished");
+				jsonObject.put("status", "error");
+				return jsonObject;
 			} else {
-				return memID;
+				Date now = new Date();
+				int seconds = (int) ((now.getTime() - lastLog.getRecordtm().getTime()) / 1000 / 60);
+				if (seconds > 30) {
+					jsonObject.put("passwd", mem.getPword());
+					jsonObject.put("result", mem.getId());
+					jsonObject.put("message", "ReLogin");
+					jsonObject.put("status", "error");
+					return jsonObject;
+				} else {
+					jsonObject.put("result", mem.getId());
+					jsonObject.put("message", "passed");
+					jsonObject.put("status", "success");
+					return jsonObject;
+				}
 			}
 		}
+
 	}
 
 	@Override

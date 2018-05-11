@@ -16,6 +16,10 @@ public class FastDFSFile implements FileManagerConfig {
 
 	private String length;
 
+	private Integer fileType;
+
+	private String mainId;
+
 	private String author = FILE_DEFAULT_AUTHOR;
 
 	public byte[] getContent() {
@@ -48,6 +52,22 @@ public class FastDFSFile implements FileManagerConfig {
 
 	public void setLength(String length) {
 		this.length = length;
+	}
+
+	public Integer getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(Integer fileType) {
+		this.fileType = fileType;
+	}
+
+	public String getMainId() {
+		return mainId;
+	}
+
+	public void setMainId(String mainId) {
+		this.mainId = mainId;
 	}
 
 	public String getAuthor() {

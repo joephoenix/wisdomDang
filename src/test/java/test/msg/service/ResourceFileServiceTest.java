@@ -18,17 +18,17 @@ import test.msg.BaseUnitTest;
 public class ResourceFileServiceTest extends BaseUnitTest {
 
 	@Autowired
-	private ResourceFileService sfileService;
+	private ResourceFileService resourceFileService;
 
 	/***
-	 * test save file to fastdfs server
-	 * when need to annotata the varie "classPath" in the class FileManager.
+	 * test save file to fastdfs server when need to annotata the varie "classPath"
+	 * in the class FileManager.
 	 */
 	@Test
 	public void testSavefileAction() {
 		File fin;
-		String fileName = "0304";
-		String fileExt = "jpg";
+		String fileName = "ImaginarySpace";
+		String fileExt = "mp4";
 		String fileFolder = "E:\\MyProjects\\";
 		String sid = null;
 		BufferedInputStream in = null;
@@ -53,7 +53,9 @@ public class ResourceFileServiceTest extends BaseUnitTest {
 			fdfs.setAuthor("admin");
 			fdfs.setContent(bos.toByteArray());
 			fdfs.setLength(String.valueOf(flen));
-			sid = sfileService.uploadChooseFileToFastdfs(fdfs);
+			fdfs.setMainId("43981c41-54f0-11e8-b744-525400368cb9");
+			fdfs.setFileType(3);
+			sid = resourceFileService.uploadChooseFileToFastdfs(fdfs);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
@@ -66,7 +68,7 @@ public class ResourceFileServiceTest extends BaseUnitTest {
 		if (null == sid) {
 			System.out.println("file save id is null, so save failed");
 		} else {
-			ResourceFile rlt = sfileService.getSaveFileInformation(sid);
+			ResourceFile rlt = resourceFileService.getSaveFileInformation(sid);
 			if (null == rlt) {
 				System.out.println("can't find the choose file");
 			} else {

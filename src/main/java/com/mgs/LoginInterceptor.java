@@ -44,7 +44,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 			throws Exception {
 		JSONObject jsonObject = new JSONObject();
 		// 获取请求的URL
-		String url = request.getRequestURI();
+		String url = request.getReader().toString();
 
 		response.setContentType("text/html");
 		response.setCharacterEncoding("utf-8");
